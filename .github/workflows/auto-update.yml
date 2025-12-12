@@ -1,0 +1,41 @@
+name: Auto Update From ZIP
+
+on:
+  push:
+    paths:
+      - "updates/*.zip"  # Only triggers when you upload a zip inside /updates
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install unzip
+      run: sudo apt-get install unzip -y
+
+    - name: Extract latest ZIP
+      run: |
+        ZIP_FILE=$(ls -t updates/*.zip | head -n 1)
+        echo "Using ZIP: $ZIP_FILE"
+        rm -rf site_tmp
+        mkdir site_tmp
+        unzip "$ZIP_FILE" -d site_tmp
+
+    - name: Replace website files
+      run: |
+        # Delete all site files except .github and updates folder
+        find . -maxdepth 1 ! -name ".github" ! -name "updates" ! -name "." -exec rm -rf {} \;
+        
+        # Move extracted files to root
+        mv site_tmp/* .
+
+    - name: Commit & push changes
+      run: |
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add .
+        git commit -m "Auto-update website from ZIP" || echo "No changes to commit"
+        git push
