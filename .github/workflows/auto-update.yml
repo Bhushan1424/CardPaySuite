@@ -3,7 +3,7 @@ name: Auto Update From ZIP
 on:
   push:
     paths:
-      - "updates/*.zip"  # Only triggers when you upload a zip inside /updates
+      - "updates/*.zip"
 
 jobs:
   update-site:
@@ -23,19 +23,32 @@ jobs:
         rm -rf site_tmp
         mkdir site_tmp
         unzip "$ZIP_FILE" -d site_tmp
+        echo "Extraction done"
+        echo "Contents of site_tmp:"
+        ls -R site_tmp
+
+    - name: Find extracted root folder
+      id: findfolder
+      run: |
+        ROOT_DIR=$(find site_tmp -mindepth 1 -maxdepth 1 -type d | head -n 1)
+        if [ -z "$ROOT_DIR" ]; then ROOT_DIR="site_tmp"; fi
+        echo "root=$ROOT_DIR" >> $GITHUB_OUTPUT
 
     - name: Replace website files
       run: |
-        # Delete all site files except .github and updates folder
+        ROOT="${{ steps.findfolder.outputs.root }}"
+        echo "Using ROOT = $ROOT"
+
+        # Delete everything except .github and updates
         find . -maxdepth 1 ! -name ".github" ! -name "updates" ! -name "." -exec rm -rf {} \;
-        
-        # Move extracted files to root
-        mv site_tmp/* .
+
+        # Move extracted files
+        mv "$ROOT"/* .
 
     - name: Commit & push changes
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
         git add .
-        git commit -m "Auto-update website from ZIP" || echo "No changes to commit"
+        git commit -m "Auto update from ZIP" || echo "No changes to commit"
         git push
