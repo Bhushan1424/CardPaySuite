@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout repo
       uses: actions/checkout@v3
 
     - name: Install unzip
@@ -18,50 +18,52 @@ jobs:
 
     - name: Extract ZIP
       run: |
-        ZIP_FILE=$(ls -t updates/*.zip | head -n 1)
-        echo "Using ZIP: $ZIP_FILE"
+        ZIP=$(ls -t updates/*.zip | head -n 1)
+        echo "Extracting ZIP: $ZIP"
         rm -rf site_tmp
-        mkdir site_tmp
-        unzip "$ZIP_FILE" -d site_tmp
-        echo "--- Extracted ZIP structure: ---"
+        mkdir -p site_tmp
+        unzip "$ZIP" -d site_tmp
+        echo "---- Extracted Structure ----"
         ls -R site_tmp
 
-    - name: Detect correct root folder
-      id: findroot
+    - name: Detect actual root folder containing index.html
+      id: detect
       run: |
-        # Case 1: index.html at top level
-        if [ -f "site_tmp/index.html" ]; then
-          echo "root=site_tmp" >> $GITHUB_OUTPUT
-          exit 0
-        fi
-
-        # Case 2: find folder that contains index.html
-        ROOT=$(find site_tmp -type f -name "index.html" -printf "%h\n" | head -n 1)
+        ROOT=$(find site_tmp -type f -name "index.html" | head -n 1 | xargs dirname)
 
         if [ -z "$ROOT" ]; then
-          echo "ERROR: Could not find index.html inside ZIP!"
+          echo "ERROR: index.html not found in ZIP!"
           exit 1
         fi
 
-        echo "Detected root folder: $ROOT"
+        echo "Detected ROOT = $ROOT"
         echo "root=$ROOT" >> $GITHUB_OUTPUT
 
     - name: Replace website files
       run: |
-        ROOT="${{ steps.findroot.outputs.root }}"
+        ROOT="${{ steps.detect.outputs.root }}"
         echo "Using ROOT = $ROOT"
 
-        # Delete all files except .github + updates
+        # Safety: ensure ROOT exists
+        if [ ! -d "$ROOT" ]; then
+          echo "ERROR: Extracted ROOT folder does not exist!"
+          exit 1
+        fi
+
+        # Delete all except .github + updates
         find . -maxdepth 1 ! -name ".github" ! -name "updates" ! -name "." -exec rm -rf {} \;
 
-        # Move all extracted files
+        # Move files from ROOT → project root
+        shopt -s dotglob
         mv "$ROOT"/* .
+        shopt -u dotglob
 
-    - name: Commit & Push
+        echo "Files moved successfully."
+
+    - name: Commit & Push changes
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
-
         git add .
         git commit -m "Auto update from ZIP" || echo "No changes"
         git push
