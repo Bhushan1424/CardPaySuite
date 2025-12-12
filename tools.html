@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tools — CardPaySuite</title>
+<meta name="description" content="Lightweight client-side fintech tools: Luhn checker, ISO 8583 bitmap inspector, Hex↔ASCII, Base64.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="light" data-theme="light">
+<header class="site-header"><div class="container"><a class="brand" href="index.html">CardPaySuite</a></div></header>
+<main class="container">
+  <h1>Tools</h1>
+
+  <section aria-labelledby="luhn">
+    <h2 id="luhn">Luhn Checker</h2>
+    <p>Paste a card number (no storage). Checks validity client-side.</p>
+    <label for="luhn-input">Card number</label>
+    <input id="luhn-input" inputmode="numeric" aria-describedby="luhn-result" />
+    <button id="luhn-check">Check</button>
+    <div id="luhn-result" role="status" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="iso">
+    <h2 id="iso">ISO 8583 Bitmap Inspector (Basic)</h2>
+    <p>Paste an ISO 8583 message as HEX (MTI + Primary Bitmap + data). The tool decodes MTI and primary bitmap and lists present fields. This is a lightweight inspector — it doesn't store inputs.</p>
+    <label for="iso-input">ISO 8583 hex input</label>
+    <textarea id="iso-input" rows="6" aria-describedby="iso-help"></textarea>
+    <div id="iso-help">Example: 30323030BF... (MTI '0200' then bitmap)</div>
+    <button id="iso-parse">Inspect</button>
+    <pre id="iso-output" role="region" aria-live="polite"></pre>
+  </section>
+
+  <section aria-labelledby="hex">
+    <h2 id="hex">Hex ↔ ASCII</h2>
+    <label for="hex-input">Hex input</label>
+    <textarea id="hex-input" rows="4"></textarea>
+    <button id="hex-to-ascii">Hex → ASCII</button>
+    <div id="hex-ascii-output" role="status" aria-live="polite"></div>
+    <hr>
+    <label for="ascii-input">ASCII input</label>
+    <textarea id="ascii-input" rows="2"></textarea>
+    <button id="ascii-to-hex">ASCII → Hex</button>
+    <div id="ascii-hex-output" role="status" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="b64">
+    <h2 id="b64">Base64 Encode / Decode</h2>
+    <label for="b64-input">Input</label>
+    <textarea id="b64-input" rows="3"></textarea>
+    <button id="b64-encode">Encode</button>
+    <button id="b64-decode">Decode</button>
+    <div id="b64-output" role="status" aria-live="polite"></div>
+  </section>
+
+  <p class="note">All tools run client-side in your browser. No data leaves your machine.</p>
+</main>
+<footer class="site-footer"><div class="container"><p><a href="index.html">Home</a></p></div></footer>
+<script src="js/tools.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
