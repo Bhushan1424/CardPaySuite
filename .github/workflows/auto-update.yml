@@ -16,39 +16,52 @@ jobs:
     - name: Install unzip
       run: sudo apt-get install unzip -y
 
-    - name: Extract latest ZIP
+    - name: Extract ZIP
       run: |
         ZIP_FILE=$(ls -t updates/*.zip | head -n 1)
         echo "Using ZIP: $ZIP_FILE"
         rm -rf site_tmp
         mkdir site_tmp
         unzip "$ZIP_FILE" -d site_tmp
-        echo "Extraction done"
-        echo "Contents of site_tmp:"
+        echo "--- Extracted ZIP structure: ---"
         ls -R site_tmp
 
-    - name: Find extracted root folder
-      id: findfolder
+    - name: Detect correct root folder
+      id: findroot
       run: |
-        ROOT_DIR=$(find site_tmp -mindepth 1 -maxdepth 1 -type d | head -n 1)
-        if [ -z "$ROOT_DIR" ]; then ROOT_DIR="site_tmp"; fi
-        echo "root=$ROOT_DIR" >> $GITHUB_OUTPUT
+        # Case 1: index.html at top level
+        if [ -f "site_tmp/index.html" ]; then
+          echo "root=site_tmp" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        # Case 2: find folder that contains index.html
+        ROOT=$(find site_tmp -type f -name "index.html" -printf "%h\n" | head -n 1)
+
+        if [ -z "$ROOT" ]; then
+          echo "ERROR: Could not find index.html inside ZIP!"
+          exit 1
+        fi
+
+        echo "Detected root folder: $ROOT"
+        echo "root=$ROOT" >> $GITHUB_OUTPUT
 
     - name: Replace website files
       run: |
-        ROOT="${{ steps.findfolder.outputs.root }}"
+        ROOT="${{ steps.findroot.outputs.root }}"
         echo "Using ROOT = $ROOT"
 
-        # Delete everything except .github and updates
+        # Delete all files except .github + updates
         find . -maxdepth 1 ! -name ".github" ! -name "updates" ! -name "." -exec rm -rf {} \;
 
-        # Move extracted files
+        # Move all extracted files
         mv "$ROOT"/* .
 
-    - name: Commit & push changes
+    - name: Commit & Push
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
+
         git add .
-        git commit -m "Auto update from ZIP" || echo "No changes to commit"
+        git commit -m "Auto update from ZIP" || echo "No changes"
         git push
