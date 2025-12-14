@@ -1,69 +1,18 @@
-name: Auto Update From ZIP
+- name: Replace website files
+  run: |
+    ROOT="${{ steps.detect.outputs.root }}"
+    echo "Using ROOT = $ROOT"
 
-on:
-  push:
-    paths:
-      - "updates/*.zip"
+    # Delete everything except .github and updates folders
+    find . -mindepth 1 -maxdepth 1 ! -name ".github" ! -name "updates" -exec rm -rf {} \;
 
-jobs:
-  update-site:
-    runs-on: ubuntu-latest
+    # Enable dotglob so * matches all files (incl. hidden)
+    shopt -s dotglob nullglob
 
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+    echo "Moving files from $ROOT/* to repo root"
+    mv "$ROOT"/* .
 
-    - name: Install unzip
-      run: sudo apt-get install unzip -y
+    # Disable glob options
+    shopt -u dotglob nullglob
 
-    - name: Extract ZIP
-      run: |
-        ZIP=$(ls -t updates/*.zip | head -n 1)
-        echo "Extracting ZIP: $ZIP"
-        rm -rf site_tmp
-        mkdir -p site_tmp
-        unzip "$ZIP" -d site_tmp
-        echo "---- Extracted Structure ----"
-        ls -R site_tmp
-
-    - name: Detect actual root folder containing index.html
-      id: detect
-      run: |
-        ROOT=$(find site_tmp -type f -name "index.html" | head -n 1 | xargs dirname)
-
-        if [ -z "$ROOT" ]; then
-          echo "ERROR: index.html not found in ZIP!"
-          exit 1
-        fi
-
-        echo "Detected ROOT = $ROOT"
-        echo "root=$ROOT" >> $GITHUB_OUTPUT
-
-    - name: Replace website files
-      run: |
-        ROOT="${{ steps.detect.outputs.root }}"
-        echo "Using ROOT = $ROOT"
-
-        # Safety: ensure ROOT exists
-        if [ ! -d "$ROOT" ]; then
-          echo "ERROR: Extracted ROOT folder does not exist!"
-          exit 1
-        fi
-
-        # Delete all except .github + updates
-        find . -maxdepth 1 ! -name ".github" ! -name "updates" ! -name "." -exec rm -rf {} \;
-
-        # Move files from ROOT → project root
-        shopt -s dotglob
-        mv "$ROOT"/* .
-        shopt -u dotglob
-
-        echo "Files moved successfully."
-
-    - name: Commit & Push changes
-      run: |
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git add .
-        git commit -m "Auto update from ZIP" || echo "No changes"
-        git push
+    echo "Move completed!"
