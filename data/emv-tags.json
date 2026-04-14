@@ -1,0 +1,47 @@
+{
+  "Core EMV Transaction Tags": {
+    "9F02": "Amount Authorised",
+    "9F03": "Amount Other",
+    "9F1A": "Terminal Country Code",
+    "5F2A": "Transaction Currency Code",
+    "9A": "Transaction Date",
+    "9C": "Transaction Type",
+    "9F21": "Transaction Time"
+  },
+
+  "Card & Application Information": {
+    "84": "Dedicated File Name",
+    "4F": "Application Identifier (AID)",
+    "50": "Application Label",
+    "5F24": "Application Expiry Date",
+    "5F25": "Application Effective Date",
+    "5A": "Application PAN",
+    "5F34": "PAN Sequence Number"
+  },
+
+  "Security & Cryptogram Tags": {
+    "9F26": "Application Cryptogram",
+    "9F27": "Cryptogram Information Data",
+    "9F10": "Issuer Application Data",
+    "9F36": "Application Transaction Counter",
+    "9F37": "Unpredictable Number"
+  },
+
+  "Terminal Information": {
+    "9F33": "Terminal Capabilities",
+    "9F34": "CVM Results",
+    "9F35": "Terminal Type",
+    "9F40": "Additional Terminal Capabilities",
+    "9F41": "Transaction Sequence Counter"
+  },
+
+  "Risk Management": {
+    "95": "Terminal Verification Results",
+    "9B": "Transaction Status Information"
+  },
+
+  "Application Profile": {
+    "82": "Application Interchange Profile",
+    "94": "Application File Locator"
+  }
+}

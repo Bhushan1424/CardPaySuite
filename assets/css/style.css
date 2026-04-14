@@ -1,0 +1,265 @@
+/* =========================
+GLOBAL
+========================= */
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f9fafb;
+color:#111827;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+/* =========================
+HEADER
+========================= */
+
+header{
+background:#ffffff;
+border-bottom:1px solid #e5e7eb;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.nav{
+max-width:1200px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 20px;
+}
+
+.logo{
+font-size:22px;
+font-weight:700;
+}
+
+.menu a{
+margin-left:25px;
+font-size:15px;
+color:#374151;
+}
+
+.menu a:hover{
+color:#4f46e5;
+}
+
+/* =========================
+SIMULATOR
+========================= */
+
+.payment-simulator{
+padding:80px 20px;
+text-align:center;
+max-width:1200px;
+margin:auto;
+}
+
+/* =========================
+GRID (FIXED)
+========================= */
+
+.main-grid{
+display:grid;
+grid-template-columns: 200px 2fr 240px;
+grid-template-rows: auto auto; /* 🔥 FIX */
+gap:24px;
+align-items:start;
+margin-top:40px;
+}
+
+/* grid mapping */
+
+.a1{ grid-column:1; grid-row:1; }
+.b1{ grid-column:1; grid-row:2; }
+
+.a2{ grid-column:2; grid-row:1 / span 2; }
+
+.b3{ grid-column:3; grid-row:1 / span 2; }
+
+/* =========================
+STEP BLOCK
+========================= */
+
+.step-block{
+background:white;
+padding:18px;
+border-radius:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* =========================
+PRODUCTS
+========================= */
+
+.product-grid{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:10px;
+}
+
+.product{
+width:90px;
+padding:8px;
+border-radius:8px;
+background:#f9fafb;
+cursor:pointer;
+text-align:center;
+font-size:16px;
+}
+
+.product.selected{
+border:2px solid #4f46e5;
+background:#eef2ff;
+}
+
+/* =========================
+POS
+========================= */
+
+.terminal{
+padding:20px;
+background:#eef2ff;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+position:relative;
+z-index:5;
+}
+
+.amount{
+margin-top:10px;
+font-size:14px;
+}
+
+#terminalText{
+margin-top:6px;
+font-weight:600;
+font-size:13px;
+}
+
+/* =========================
+FLOW (CLEAN)
+========================= */
+
+.payment-flow-diagram{
+display:flex;
+flex-direction:column;
+align-items:center;
+max-width:500px;
+margin:auto;
+}
+
+.flow-row{
+display:flex;
+align-items:center;
+gap:15px;
+width:100%;
+margin:15px 0;
+}
+
+/* circle */
+.step{
+width:80px;
+height:80px;
+border-radius:50%;
+background:#f1f5f9;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:600;
+transition:0.3s;
+}
+
+.step.active{
+background:#6366f1;
+color:white;
+box-shadow:0 0 12px rgba(99,102,241,0.6);
+}
+
+/* arrows */
+.arrow{
+width:30px;
+text-align:center;
+font-size:18px;
+}
+
+.arrow.down::before{ content:"↓"; color:#9ca3af; }
+.arrow.up::before{ content:"↑"; color:#9ca3af; }
+
+.arrow.active-forward::before{ color:#6366f1; }
+.arrow.active-success::before{ color:#16a34a; }
+.arrow.active-fail::before{ color:#dc2626; }
+
+/* info box */
+.flow-box{
+flex:1;
+min-height:50px;
+padding:10px;
+border-radius:8px;
+background:#f5f7ff;
+border-left:4px solid #6366f1;
+font-size:13px;
+}
+
+.flow-box.active{
+background:#ecfdf5;
+border-left:4px solid #16a34a;
+}
+
+/* =========================
+RESULT
+========================= */
+
+.result-box{
+text-align:left;
+font-size:14px;
+}
+
+.approved{
+color:#16a34a;
+font-weight:700;
+}
+
+.declined{
+color:#dc2626;
+font-weight:700;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+margin-top:60px;
+padding:30px;
+text-align:center;
+background:#111827;
+color:white;
+}
+
+/* FIX PRODUCT CLICK */
+.product {
+  position: relative;
+  z-index: 10;
+}
+
+/* FIX LEFT COLUMN STACKING */
+.a1, .b1 {
+  position: relative;
+  z-index: 5;
+}
+
+/* PREVENT FLOW OVERLAP */
+.a2 {
+  position: relative;
+  z-index: 1;
+}
