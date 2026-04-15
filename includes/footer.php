@@ -1,90 +1,68 @@
-<footer>
-© 2026 Card Pay Suite
+<footer class="site-footer glass-panel">
+    <div class="container footer-content">
+        <div class="footer-left">
+            <p>© 2026 <strong>Card Pay Suite</strong> <span class="badge">v1.0.0-beta</span></p>
+        </div>
+        
+        <div class="footer-links">
+            <a href="/docs/index.php"><i class="fa-solid fa-book"></i> Documentation</a>
+            <a href="https://github.com/Bhushan1424/CardPaySuite" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a href="/news.php"><i class="fa-solid fa-rss"></i> Updates</a>
+        </div>
+    </div>
 </footer>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  console.log("JS Loaded ✅");
-
-  // ✅ Safe Card Input Formatting
-  let cardInput = document.getElementById("cardInput");
-  if (cardInput) {
-    cardInput.addEventListener("input", function(e){
-      let value = e.target.value.replace(/\D/g, "");
-      value = value.substring(0,16);
-      value = value.replace(/(.{4})/g, "$1 ").trim();
-      e.target.value = value;
-    });
-  }
-
-  // ✅ Drag & Drop Safe Handling
-  let card = document.getElementById("card");
-  let terminal = document.getElementById("terminal");
-
-  if (card && terminal) {
-
-    card.draggable = true;
-
-    card.addEventListener("dragstart", function(e){
-      e.dataTransfer.setData("text","");
-    });
-
-    terminal.addEventListener("dragover", function(e){
-      e.preventDefault();
-    });
-
-    terminal.addEventListener("drop", function(){
-
-      let terminalText = document.getElementById("terminalText");
-      if (terminalText) {
-        terminalText.innerText = "Tap Successful";
-      }
-
-      startTransaction();
-
-    });
-
-  }
-
-});
-
-
-// ✅ Payment Flow (for .payment-flow UI if used)
-function runPaymentFlow(){
-
-  let steps = document.querySelectorAll('.payment-flow .step');
-
-  steps.forEach(s => s.classList.remove('active'));
-
-  steps.forEach((step,index)=>{
-    setTimeout(()=>{
-      step.classList.add('active');
-    }, index * 700);
-  });
-
-}
-
-
-// ✅ MAIN TRANSACTION FLOW (ONLY ONE VERSION)
-function startTransaction(){
-
-  let nodes = ["merchant","acquirer","switch","network","issuer"];
-
-  nodes.forEach((id,index)=>{
-
-    let el = document.getElementById(id);
-
-    if (el) {
-      setTimeout(()=>{
-        el.classList.add("active");
-      }, index * 800);
+<style>
+    .site-footer {
+        margin-top: 60px;
+        padding: 25px 0;
+        border-top: 1px solid var(--border-color);
+        background: var(--glass-bg);
     }
-
-  });
-
-}
-</script>
-
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+    .footer-links {
+        display: flex;
+        gap: 25px;
+    }
+    .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .footer-links a:hover {
+        color: var(--accent-primary);
+    }
+    .badge {
+        font-size: 0.7rem;
+        background: var(--bg-surface);
+        padding: 2px 8px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+    }
+</style>
+<!-- Global Tooltip Element -->
+<div id="global-tooltip" class="node-tooltip">
+    <h4 id="tt-title"></h4>
+    <p id="tt-desc"></p>
+    <div id="tt-iso" class="iso-info"></div>
+</div>
 </body>
 </html>

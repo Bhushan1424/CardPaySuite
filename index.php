@@ -6,137 +6,159 @@
 <section class="simulator-section">
     <div class="container">
         <header class="section-header">
-            <h2>Card Payment Transaction Simulator</h2>
+            <h2 class="text-gradient">Card Payment Transaction Simulator</h2>
             <p class="subtitle">Interactive flow visualization for fintech transactions</p>
         </header>
 
         <div class="main-grid">
 
-            <!-- PRODUCTS -->
-            <article class="card step-block">
-                <div class="card-header">
-                    <h3>1. Purchase</h3>
-                </div>
-                <div class="card-body">
-                    <div class="product-grid">
-                        <div class="product-item" data-name="Burger" data-price="25">
-                            <span class="icon">🍔</span>
-                            <div class="details">
-                                <p class="name">Burger</p>
-                                <span class="price">$25.00</span>
-                            </div>
-                        </div>
-
-                        <div class="product-item" data-name="Fries" data-price="10">
-                            <span class="icon">🍟</span>
-                            <div class="details">
-                                <p class="name">Fries</p>
-                                <span class="price">$10.00</span>
-                            </div>
+            <!-- PANEL 1: PREMIUM TERMINAL -->
+            <article class="card terminal-premium-card">
+                <div class="terminal-header">
+                    <div class="header-main">
+                        <h3 class="terminal-title">Terminal Interface</h3>
+                        <div class="status-indicator">
+                            <span class="pulse-dot"></span>
+                            <span id="terminalText" class="status-text">Ready</span>
                         </div>
                     </div>
                 </div>
-            </article>
 
-            <!-- POS -->
-            <article class="card step-block">
-                <div class="card-header">
-                    <h3>2. POS Terminal</h3>
-                </div>
-                <div class="card-body">
-                    <div class="terminal" id="posTerminal">
-                        <div class="terminal-screen">
-                            <span class="amount">$<span id="amountValue">0.00</span></span>
+                <div class="terminal-body">
+                    <div class="section-label">Select Item</div>
+                    <div class="item-list">
+                        <div class="item-row" data-name="Premium Burger" data-price="25">
+                            <div class="item-info">
+                                <div class="item-icon">🍔</div>
+                                <span class="item-name">Premium Burger</span>
+                            </div>
+                            <span class="item-price">$25.00</span>
                         </div>
-                        <div class="terminal-pad">
-                            <span class="tap-indicator">Tap Here</span>
+                        <div class="item-row" data-name="Crispy Fries" data-price="10">
+                            <div class="item-info">
+                                <div class="item-icon">🍟</div>
+                                <span class="item-name">Crispy Fries</span>
+                            </div>
+                            <span class="item-price">$10.00</span>
                         </div>
                     </div>
-                    <p id="terminalText" class="status-text">Select product</p>
+                    <div class="divider"></div>
+                    <div class="payment-summary">
+                        <div class="summary-row">
+                            <span class="label">Total Amount</span>
+                            <span class="value">$<span id="amountValue">0.00</span></span>
+                        </div>
+                    </div>
+                    <div class="loader-container" id="loaderContainer">
+                        <div class="loader-bar"></div>
+                        <span class="loader-text">Processing Transaction...</span>
+                    </div>
+                    <button id="posTerminal" class="btn-proceed">
+                        <span class="btn-text">Proceed to Payment</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
             </article>
 
-            <!-- FLOW -->
+            <!-- PANEL 2: INTERACTIVE FLOW (FIXED IDs) -->
             <article class="card step-block flow-card">
                 <div class="card-header">
-                    <h3>3. Payment Flow</h3>
+                    <h3>2. Transaction Flow</h3>
                 </div>
                 <div class="card-body">
-                    <div class="payment-flow-diagram">
-
-                        <div class="flow-row">
-                            <div class="step-node" id="merchant">Merchant</div>
-                            <div class="arrow down" id="arrow-merchant"></div>
-                            <div class="flow-box" id="info-merchant"></div>
+                    <div class="payment-flow-container">
+                        <!-- Merchant -->
+                        <div class="flow-node-wrapper">
+                            <div class="flow-node" id="merchant" data-title="Merchant" data-desc="Initiates the transaction request via the POS terminal." data-iso="ISO 8583: MTI 0200 (Financial Request)">
+                                <div class="node-icon"><i class="fa-solid fa-store"></i></div>
+                                <span class="node-label">Merchant</span>
+                            </div>
+                            <div class="flow-connector" id="arrow-merchant"></div>
                         </div>
-
-                        <div class="flow-row">
-                            <div class="step-node" id="acquirer">Acquirer</div>
-                            <div class="arrow down" id="arrow-acquirer"></div>
-                            <div class="flow-box" id="info-acquirer"></div>
+                        <!-- Acquirer -->
+                        <div class="flow-node-wrapper">
+                            <div class="flow-node" id="acquirer" data-title="Acquirer" data-desc="Receives the request and routes it to the network." data-iso="ISO 8583: Field 3 (Processing Code)">
+                                <div class="node-icon"><i class="fa-solid fa-building-columns"></i></div>
+                                <span class="node-label">Acquirer</span>
+                            </div>
+                            <div class="flow-connector" id="arrow-acquirer"></div>
                         </div>
-
-                        <div class="flow-row">
-                            <div class="step-node" id="switch">Switch</div>
-                            <div class="arrow down" id="arrow-switch"></div>
-                            <div class="flow-box" id="info-switch"></div>
+                        <!-- Switch -->
+                        <div class="flow-node-wrapper">
+                            <div class="flow-node" id="switch" data-title="Payment Switch" data-desc="The central routing hub that directs messages." data-iso="Logic: BIN Routing">
+                                <div class="node-icon"><i class="fa-solid fa-route"></i></div>
+                                <span class="node-label">Switch</span>
+                            </div>
+                            <div class="flow-connector" id="arrow-switch"></div>
                         </div>
-
-                        <div class="flow-row">
-                            <div class="step-node" id="network">Network</div>
-                            <div class="arrow down" id="arrow-network"></div>
-                            <div class="flow-box" id="info-network"></div>
+                        <!-- Network -->
+                        <div class="flow-node-wrapper">
+                            <div class="flow-node" id="network" data-title="Card Network" data-desc="Validates card and routes to the Issuer bank." data-iso="ISO 8583: Network Validation">
+                                <div class="node-icon"><i class="fa-solid fa-globe"></i></div>
+                                <span class="node-label">Network</span>
+                            </div>
+                            <div class="flow-connector" id="arrow-network"></div>
                         </div>
-
-                        <div class="flow-row">
-                            <div class="step-node" id="issuer">Issuer</div>
-                            <div class="flow-box" id="info-issuer"></div>
+                        <!-- Issuer -->
+                        <div class="flow-node-wrapper">
+                            <div class="flow-node" id="issuer" data-title="Issuing Bank" data-desc="Checks balance and security. Sends final decision." data-iso="ISO 8583: Field 39 (Response Code)">
+                                <div class="node-icon"><i class="fa-solid fa-credit-card"></i></div>
+                                <span class="node-label">Issuer</span>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </article>
 
-            <!-- RESULT -->
-            <article class="card step-block">
+            <!-- PANEL 3: TRANSACTION RESULT -->
+            <article class="card step-block result-premium-card">
                 <div class="card-header">
-                    <h3>4. Result</h3>
+                    <h3>3. Transaction Result</h3>
                 </div>
                 <div class="card-body">
-                    <div class="result-box">
+                    <div class="result-glass-container">
                         <div class="result-row">
-                            <span class="label">Status:</span>
-                            <span id="resultStatus" class="value">Waiting</span>
+                            <div class="row-label"><i class="fa-solid fa-circle-dot"></i> Status</div>
+                            <div class="row-value"><span id="resultStatus" class="status-badge waiting">Waiting</span></div>
                         </div>
                         <div class="result-row">
-                            <span class="label">Item:</span>
-                            <span id="resultItem" class="value">-</span>
+                            <div class="row-label"><i class="fa-solid fa-cart-shopping"></i> Item</div>
+                            <div class="row-value" id="resultItem">-</div>
                         </div>
                         <div class="result-row">
-                            <span class="label">Amount:</span>
-                            <span id="resultAmount" class="value">-</span>
+                            <div class="row-label"><i class="fa-solid fa-dollar-sign"></i> Amount</div>
+                            <div class="row-value" id="resultAmount">-</div>
                         </div>
                         <div class="result-row">
-                            <span class="label">Auth Code:</span>
-                            <span id="authCode" class="value">----</span>
+                            <div class="row-label"><i class="fa-solid fa-shield-halved"></i> Auth Code</div>
+                            <div class="row-value" id="authCode">----</div>
                         </div>
                         <div class="result-row">
-                            <span class="label">Response:</span>
-                            <span id="responseText" class="value">-</span>
+                            <div class="row-label"><i class="fa-solid fa-comment-dots"></i> Response</div>
+                            <div class="row-value" id="responseText">-</div>
                         </div>
-
-                        <button id="resetBtn" class="btn btn-reset">
-                            <span>🔄</span> Reset Transaction
-                        </button>
+                        <div class="tech-details-wrapper">
+                            <div class="tech-toggle" id="toggleTech">
+                                <span><i class="fa-solid fa-code"></i> View Technical Details</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="tech-panel" id="techPanel">
+                                <div class="tech-grid">
+                                    <div class="tech-item"><span class="t-label">MTI</span><span class="t-value" id="techMti">-</span></div>
+                                    <div class="tech-item"><span class="t-label">DE39</span><span class="t-value" id="techDe39">-</span></div>
+                                    <div class="tech-item"><span class="t-label">Trace ID</span><span class="t-value" id="techTrace">-</span></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <button id="resetBtn" class="btn-restart">
+                        <i class="fa-solid fa-rotate-right"></i> Start New Transaction
+                    </button>
                 </div>
             </article>
-
         </div>
     </div>
 </section>
 
-<!-- Link Custom JS -->
 <script src="assets/js/simulator.js"></script>
-
 <?php include 'includes/footer.php'; ?>
