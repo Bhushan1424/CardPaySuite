@@ -6,7 +6,6 @@
         
         <div class="footer-links">
             <a href="/docs/index.php"><i class="fa-solid fa-book"></i> Documentation</a>
-            <a href="https://github.com/Bhushan1424/CardPaySuite" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
             <a href="/news.php"><i class="fa-solid fa-rss"></i> Updates</a>
         </div>
     </div>
