@@ -3,7 +3,44 @@
 <!-- Link Custom CSS -->
 <link rel="stylesheet" href="assets/css/simulator.css">
 
-<section class="simulator-section">
+<!-- 1. HERO SECTION -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="text-gradient">Master the Art of <br>Payment Processing</h1>
+            <p class="hero-description">
+                An interactive deep-dive into the world of Fintech. Learn how transactions travel from a POS terminal 
+                through the <strong>ISO 8583</strong> standard, routing through switches and networks, and finally 
+                reaching the issuing bank. Designed for developers, students, and fintech enthusiasts.
+            </p>
+
+            <!-- Highlight Points -->
+            <div class="hero-highlights">
+                <div class="highlight-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Interactive Visualization</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>ISO 8583 Logic</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Real-time Response Simulation</span>
+                </div>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="#simulator-section" class="btn-proceed hero-cta">
+                <span>Launch Transaction Simulator</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 2. SIMULATOR SECTION (Now with ID for scrolling) -->
+<section class="simulator-section" id="simulator-section">
     <div class="container">
         <header class="section-header">
             <h2 class="text-gradient">Card Payment Transaction Simulator</h2>
@@ -60,14 +97,13 @@
                 </div>
             </article>
 
-            <!-- PANEL 2: INTERACTIVE FLOW (FIXED IDs) -->
+            <!-- PANEL 2: INTERACTIVE FLOW -->
             <article class="card step-block flow-card">
                 <div class="card-header">
                     <h3>2. Transaction Flow</h3>
                 </div>
                 <div class="card-body">
                     <div class="payment-flow-container">
-                        <!-- Merchant -->
                         <div class="flow-node-wrapper">
                             <div class="flow-node" id="merchant" data-title="Merchant" data-desc="Initiates the transaction request via the POS terminal." data-iso="ISO 8583: MTI 0200 (Financial Request)">
                                 <div class="node-icon"><i class="fa-solid fa-store"></i></div>
@@ -75,7 +111,6 @@
                             </div>
                             <div class="flow-connector" id="arrow-merchant"></div>
                         </div>
-                        <!-- Acquirer -->
                         <div class="flow-node-wrapper">
                             <div class="flow-node" id="acquirer" data-title="Acquirer" data-desc="Receives the request and routes it to the network." data-iso="ISO 8583: Field 3 (Processing Code)">
                                 <div class="node-icon"><i class="fa-solid fa-building-columns"></i></div>
@@ -83,7 +118,6 @@
                             </div>
                             <div class="flow-connector" id="arrow-acquirer"></div>
                         </div>
-                        <!-- Switch -->
                         <div class="flow-node-wrapper">
                             <div class="flow-node" id="switch" data-title="Payment Switch" data-desc="The central routing hub that directs messages." data-iso="Logic: BIN Routing">
                                 <div class="node-icon"><i class="fa-solid fa-route"></i></div>
@@ -91,7 +125,6 @@
                             </div>
                             <div class="flow-connector" id="arrow-switch"></div>
                         </div>
-                        <!-- Network -->
                         <div class="flow-node-wrapper">
                             <div class="flow-node" id="network" data-title="Card Network" data-desc="Validates card and routes to the Issuer bank." data-iso="ISO 8583: Network Validation">
                                 <div class="node-icon"><i class="fa-solid fa-globe"></i></div>
@@ -99,7 +132,6 @@
                             </div>
                             <div class="flow-connector" id="arrow-network"></div>
                         </div>
-                        <!-- Issuer -->
                         <div class="flow-node-wrapper">
                             <div class="flow-node" id="issuer" data-title="Issuing Bank" data-desc="Checks balance and security. Sends final decision." data-iso="ISO 8583: Field 39 (Response Code)">
                                 <div class="node-icon"><i class="fa-solid fa-credit-card"></i></div>

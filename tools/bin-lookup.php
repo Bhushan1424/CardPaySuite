@@ -1,107 +1,255 @@
 <?php include '../includes/header.php'; ?>
 
-<div class="container">
+<!-- Link Custom CSS -->
+<link rel="stylesheet" href="/assets/css/simulator.css">
 
-<h1>BIN Lookup</h1>
-<p>Identify card issuer and network</p>
+<!-- WRAPPER FOR STICKY FOOTER -->
+<div class="page-wrapper">
+    <section class="tools-page-section">
+        <div class="container">
+            
+            <!-- TOOL HEADER -->
+            <header class="tools-header" style="text-align: center; margin-bottom: 40px;">
+                <h1 class="text-gradient">BIN Lookup</h1>
+                <p class="tools-subtitle">Analyze Bank Identification Numbers (BIN) to identify card issuers, networks, and country of origin.</p>
+            </header>
 
-<form method="GET">
+            <!-- MAIN TOOL INTERFACE -->
+            <div class="tool-main-container" style="max-width: 600px; margin: 0 auto;">
+                
+                <!-- INPUT PANEL -->
+                <div class="glass-panel tool-input-card">
+                    <div class="tool-card-header">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Enter BIN Data</span>
+                    </div>
+                    
+                    <div class="tool-input-group">
+                        <input type="text" id="bin" placeholder="e.g. 456789" maxlength="8">
+                        <button onclick="lookup()" id="lookupBtn" class="btn-primary">
+                            <span id="btnText">Lookup BIN</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <p class="input-hint">Enter the first 6 to 8 digits of the card number.</p>
+                </div>
 
-<input 
-type="text"
-name="bin"
-id="cardInput"
-maxlength="19"
-inputmode="numeric"
-placeholder="Enter card number"
-value="<?php echo isset($_GET['bin']) ? htmlspecialchars($_GET['bin']) : ''; ?>"
-style="width:100%;padding:12px;margin-top:20px;"
-required
->
+                <!-- RESULT PANEL -->
+                <div id="resultPanel" class="glass-panel result-card" style="display: none; margin-top: 20px;">
+                    <div class="result-card-header">
+                        <h3 style="margin:0;">Analysis Result</h3>
+                        <span id="resultStatus" class="status-badge approved">Valid BIN</span>
+                    </div>
 
-<button style="margin-top:10px;padding:10px 16px;">Lookup</button>
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <span class="res-label">Scheme</span>
+                            <span class="res-value" id="resScheme">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="res-label">Card Type</span>
+                            <span class="res-value" id="resType">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="res-label">Issuer Bank</span>
+                            <span class="res-value" id="resIssuer">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="res-label">Country</span>
+                            <span class="res-value" id="resCountry">-</span>
+                        </div>
+                    </div>
+                </div>
 
-</form>
-
-<?php
-
-if(isset($_GET['bin'])){
-
-$bin = preg_replace('/[^0-9]/','', $_GET['bin']);
-
-if(strlen($bin) < 6){
-
-echo "<p style='color:red;margin-top:15px;'>Please enter at least 6 digits.</p>";
-
-}else{
-
-$url = "https://bins.antipublic.cc/bins/".$bin;
-
-$ch = curl_init();
-
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-
-$response = curl_exec($ch);
-
-curl_close($ch);
-
-$data = json_decode($response,true);
-
-if($data && isset($data['brand'])){
-
-$brand = strtolower($data['brand'] ?? 'default');
-$type = strtoupper($data['type'] ?? 'N/A');
-$bank = $data['bank'] ?? 'N/A';
-$country = $data['country_name'] ?? 'N/A';
-
-$logo = "/assets/img/cards/".$brand.".svg";
-
-if(!file_exists($_SERVER['DOCUMENT_ROOT'].$logo)){
-$logo = "/assets/img/cards/default.png";
-}
-
-echo "<div style='margin-top:25px;background:white;border:1px solid #e5e7eb;border-radius:12px;padding:20px;display:flex;gap:30px;'>";
-
-echo "<div style='width:180px;background:#f8fafc;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:35px;'>";
-
-echo "<img src='".$logo."' style='height:80px;max-width:100%;'>";
-echo "</div>";
-
-echo "<div style='flex:1;'>";
-
-echo "<div style='display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #e5e7eb;'>";
-echo "<span style='font-weight:600;'>Card Type</span>";
-echo "<span style='background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;'>".$type."</span>";
-echo "</div>";
-
-echo "<div style='display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #e5e7eb;'>";
-echo "<span style='font-weight:600;'>Bank</span>";
-echo "<span>".$bank."</span>";
-echo "</div>";
-
-echo "<div style='display:flex;justify-content:space-between;padding:12px 0;'>";
-echo "<span style='font-weight:600;'>Country</span>";
-echo "<span>".$country."</span>";
-echo "</div>";
-
-echo "</div>";
-
-echo "</div>";
-
-}else{
-
-echo "<p style='margin-top:15px;'>No data found for this BIN.</p>";
-
-}
-
-}
-
-}
-
-?>
-
+                <!-- ERROR MESSAGE -->
+                <div id="errorMsg" class="error-banner" style="display: none;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="errorText">Invalid BIN or Network Error</span>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+
+<style>
+    /* --- Sticky Footer Logic --- */
+    .page-wrapper {
+        min-height: calc(100vh - 160px); /* Adjust 160px based on your header/footer height */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Tool Specific Styles */
+    .tools-page-section {
+        padding: 80px 0;
+        color: var(--text-main);
+    }
+
+    .tool-main-container {
+        animation: fadeInUp 0.5s ease-out;
+    }
+
+    .tool-input-card {
+        padding: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .tool-card-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        color: var(--accent-primary);
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+    }
+
+    .tool-input-group {
+        display: flex;
+        gap: 12px;
+    }
+
+    .tool-input-group input {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 14px;
+        color: white;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        transition: var(--transition);
+    }
+
+    .tool-input-group input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .input-hint {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 12px;
+    }
+
+    .result-card {
+        padding: 24px;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    .result-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .result-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .result-item {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .res-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+    }
+
+    .res-value {
+        font-weight: 600;
+        color: var(--text-bright);
+        font-size: 0.95rem;
+    }
+
+    .error-banner {
+        margin-top: 20px;
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid #f87171;
+        color: #f87171;
+        padding: 12px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+async function lookup() {
+    const binInput = document.getElementById("bin");
+    const btn = document.getElementById("lookupBtn");
+    const btnText = document.getElementById("btnText");
+    const resultPanel = document.getElementById("resultPanel");
+    const errorMsg = document.getElementById("errorMsg");
+    
+    let bin = binInput.value.trim();
+
+    if (bin.length < 6) {
+        showError("Please enter at least 6 digits.");
+        return;
+    }
+
+    errorMsg.style.display = "none";
+    resultPanel.style.display = "none";
+    btn.disabled = true;
+    btnText.innerText = "Searching...";
+
+    try {
+        // FIX: Changed path from /bin-proxy.php to ../bin-proxy.php
+        let response = await fetch("../bin-proxy.php?bin=" + bin);
+        
+        if (!response.ok) {
+            throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+        }
+        
+        let data = await response.json();
+
+        if (data && (data.Scheme || data.Issuer)) {
+            document.getElementById("resScheme").innerText = data.Scheme ?? "N/A";
+            document.getElementById("resType").innerText = data.Type ?? "N/A";
+            document.getElementById("resIssuer").innerText = data.Issuer ?? "N/A";
+            document.getElementById("resCountry").innerText = data.Country?.Name ?? "N/A";
+            resultPanel.style.display = "block";
+        } else {
+            showError("No data found for this BIN.");
+        }
+    } catch (error) {
+        showError(error.message);
+        console.error("BIN Lookup Error:", error);
+    } finally {
+        btn.disabled = false;
+        btnText.innerText = "Lookup BIN";
+    }
+}
+
+function showError(text) {
+    const errorMsg = document.getElementById("errorMsg");
+    const resultPanel = document.getElementById("resultPanel");
+    resultPanel.style.display = "none";
+    errorMsg.style.display = "flex";
+    document.getElementById("errorText").innerText = text;
+}
+</script>
 
 <?php include '../includes/footer.php'; ?>
