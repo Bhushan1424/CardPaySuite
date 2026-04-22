@@ -4,27 +4,31 @@
 */
 
 :root {
-    /* Core Colors - Deep Navy/Slate Palette */
-    --bg-darkest: #0b0f1a;      /* Main background */
-    --bg-dark: #111827;         /* Surface background */
-    --bg-surface: #1f2937;      /* Lighter surface / cards */
-    --accent-primary: #6366f1;   /* Indigo accent */
-    --accent-secondary: #a855f7; /* Purple accent */
-    --accent-glow: rgba(99, 102, 241, 0.3);
+    /* --- Softened Dark Mode Palette --- */
+    /* Backgrounds: Moved from pitch black to a deep, muted slate */
+    --bg-darkest: #111827;      /* Softened deep navy (instead of #0b0f1a) */
+    --bg-dark: #1f2937;         /* Medium slate */
+    --bg-surface: #374151;      /* Lighter slate for cards */
     
-    /* Text Colors */
-    --text-bright: #f9fafb;     /* Headings */
-    --text-main: #e5e7eb;       /* Body text */
-    --text-muted: #9ca3af;      /* Captions/Disabled */
+    /* Accents: Kept the same, but they will feel softer against the lighter background */
+    --accent-primary: #6366f1;   
+    --accent-secondary: #a855f7; 
+    --accent-glow: rgba(99, 102, 241, 0.2); /* Reduced opacity for softer glow */
     
-    /* UI Elements */
-    --border-color: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(31, 41, 55, 0.7);
-    --glass-blur: blur(12px);
+    /* Text Colors: Shifted from pure white to soft silvers/grays */
+    --text-bright: #f1f5f9;     /* Soft silver (instead of pure white) */
+    --text-main: #cbd5e1;       /* Muted silver-blue */
+    --text-muted: #94a3b8;      /* Slate gray */
+    
+    /* UI Elements - Blended Glassmorphism */
+    --border-color: rgba(255, 255, 255, 0.05); /* Even more transparent borders */
+    --glass-bg: rgba(31, 41, 55, 0.6);         /* More transparent background */
+    --glass-blur: blur(16px);                  /* Increased blur for a smoother feel */
     --radius-lg: 16px;
     --radius-md: 8px;
     --transition: all 0.2s ease-in-out;
 }
+
 
 * {
     margin: 0;
