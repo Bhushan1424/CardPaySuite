@@ -1,7 +1,7 @@
 <?php
 /**
- * CARDPAY SUITE - AI PROXY BRIDGE (AUTO-HEALING VERSION)
- * This version automatically tries multiple models if the first one is not found.
+ * CARDPAY SUITE - AI PROXY BRIDGE (GROQ STABLE VERSION)
+ * Updated: Switched to Llama 3.1 Instant for maximum stability.
  */
 
 header('Content-Type: application/json');
@@ -9,18 +9,30 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// 1. Configuration
-$API_KEY = 'AIzaSyA9HHnkH8S1o9UMmZHjMjZK_yDC2AMFPj8'; // <--- REPLACE THIS
+// 1. Load Config
+if (file_exists('config.php')) {
+    include 'config.php';
+} else {
+    echo json_encode(array('answer' => 'Configuration error: config.php missing.'));
+    exit;
+}
 
-// We define a list of models to try in order of preference
-$model_fallback_list = array(
-    "gemini-1.5-flash", // Fast, modern
-    "gemini-1.5-pro",   // More powerful
-    "gemini-pro",       // Classic stable
-    "gemini-1.0-pro"    // Legacy fallback
+if (!isset($ai_config['groq_api_key']) || empty($ai_config['groq_api_key'])) {
+    echo json_encode(array('answer' => 'Configuration Error: groq_api_key missing in config.php.'));
+    exit;
+}
+
+$API_KEY = $ai_config['groq_api_key'];
+
+// 2. MODEL LIST (In order of preference)
+// We try the newest, fastest model first.
+$model_attempts = array(
+    "llama-3.1-8b-instant", // Current standard fast model
+    "llama3-8b-8192",       // Legacy fallback
+    "mixtral-8x7b-32768"    // Reliable alternative
 );
 
-// 2. Get Input
+// 3. Get Input
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, true);
 $userQuestion = isset($input['question']) ? $input['question'] : '';
@@ -30,71 +42,52 @@ if (empty($userQuestion)) {
     exit;
 }
 
-// 3. System Prompt
-$systemPrompt = "You are the official AI Guide for 'CardPay Suite'. You are an expert in ISO 8583 and EMV TLV. Keep answers technical and concise.";
+// 4. System Prompt
+$systemPrompt = "You are the official AI Guide for 'CardPay Suite'. You are an expert in ISO 8583 and EMV TLV. Keep answers technical, professional, and concise.";
 
-// 4. Payload Structure
-$payload = array(
-    "contents" => array(
-        array(
-            "role" => "user",
-            "parts" => array(
-                array("text" => "SYSTEM INSTRUCTION: " . $systemPrompt . "\n\nUSER QUESTION: " . $userQuestion)
-            )
-        )
-    ),
-    "generationConfig" => array(
-        "temperature" => 0.7,
-        "maxOutputTokens" => 800
-    )
-);
-$jsonPayload = json_encode($payload);
-
-// 5. THE LOOP: Try models until one works
-$finalAnswer = null;
-$lastError = "";
-
-foreach ($model_fallback_list as $currentModel) {
-    // We try v1beta first, then v1 if that fails
-    $versions = array("v1beta", "v1");
+// 5. Loop through models until one works
+foreach ($model_attempts as $MODEL) {
     
-    foreach ($versions as $version) {
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/" . $currentModel . ":generateContent?key=" . $API_KEY;
-        // If version is v1, replace v1beta in the URL
-        if ($version == "v1") {
-            $url = str_replace("v1beta", "v1", $url);
-        }
-
-        $options = array(
-            "http" => array(
-                "header"  => "Content-Type: application/json\r\n",
-                "method"  => "POST",
-                "content" => $jsonPayload,
-                "ignore_errors" => true 
+    $payload = array(
+        "model" => $MODEL,
+        "messages" => array(
+            array(
+                "role" => "system",
+                "content" => $systemPrompt
+            ),
+            array(
+                "role" => "user",
+                "content" => $userQuestion
             )
-        );
+        ),
+        "temperature" => 0.7
+    );
 
-        $context  = stream_context_create($options);
-        $response = @file_get_contents($url, false, $context);
+    $jsonPayload = json_encode($payload);
 
-        if ($response !== FALSE) {
-            $result = json_decode($response, true);
-            if (isset($result['candidates'][0]['content']['parts'][0]['text'])) {
-                $finalAnswer = $result['candidates'][0]['content']['parts'][0]['text'];
-                break 2; // SUCCESS! Break out of both loops
-            } else {
-                $lastError = isset($result['error']['message']) ? $result['error']['message'] : "Model not available";
-            }
-        } else {
-            $lastError = "Connection failed for " . $currentModel;
+    $url = "https://api.groq.com/openai/v1/chat/completions";
+
+    $options = array(
+        "http" => array(
+            "header"  => "Content-Type: application/json\r\n" . "Authorization: Bearer " . $API_KEY . "\r\n",
+            "method"  => "POST",
+            "content" => $jsonPayload,
+            "ignore_errors" => true 
+        )
+    );
+
+    $context  = stream_context_create($options);
+    $response = @file_get_contents($url, false, $context);
+
+    if ($response !== FALSE) {
+        $result = json_decode($response, true);
+        if (isset($result['choices'][0]['message']['content'])) {
+            echo json_encode(array('answer' => $result['choices'][0]['message']['content']));
+            exit; // Success! Stop looking for other models.
         }
     }
 }
 
-// 6. Final Response
-if ($finalAnswer) {
-    echo json_encode(array('answer' => $finalAnswer));
-} else {
-    echo json_encode(array('answer' => "AI Error: I couldn't find a compatible model for your API key. Last error: " . $lastError));
-}
+// 6. Final Fallback if NO models work
+echo json_encode(array('answer' => "AI Error: All supported models are currently unavailable. Please check your Groq API key."));
 ?>
