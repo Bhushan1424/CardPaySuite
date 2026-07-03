@@ -8,11 +8,19 @@ require __DIR__ . '/includes/bootstrap.php';
 
 cps_cors('GET');
 
+// Category B: rate-limit this open proxy to protect the upstream API quota.
+if (!cps_rate_limit('bin:' . cps_visitor_hash(), 40, 60)) {
+    http_response_code(429);
+    cps_json(array('error' => 'Rate limit exceeded — please slow down.'));
+}
+
 $bin = isset($_GET['bin']) ? $_GET['bin'] : '';
 
 if (!ctype_digit($bin) || strlen($bin) < 6) {
     cps_json(array('error' => 'Invalid BIN'));
 }
+
+cps_track_event('bin_proxy');
 
 $url = "https://data.handyapi.com/bin/" . $bin;
 

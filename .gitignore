@@ -1,3 +1,6 @@
 error_log
 cache/*.json
 .env
+
+# Runtime tracking logs + rate-limit counters (created by includes/lib/tracker.php)
+logs/
