@@ -1,3 +1,9 @@
 error_log
 cache/*.json
 .env
+
+# Local Claude Code config (machine-specific dev-server paths, permissions)
+.claude/
+
+# Runtime tracking logs + rate-limit counters (created by includes/lib/tracker.php)
+logs/

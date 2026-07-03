@@ -1,3 +1,9 @@
+<?php
+// Bootstrap shared config + libs, then log this pageview (Category A analytics).
+// header.php is included by every page, so this is the single tracking point.
+require_once __DIR__ . '/bootstrap.php';
+cps_track_event('pageview');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
