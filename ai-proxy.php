@@ -8,6 +8,14 @@ require __DIR__ . '/includes/bootstrap.php';
 
 cps_cors('POST');
 
+// Category B: this endpoint is open (CORS *) and spends the paid Groq key, so
+// rate-limit per visitor and log each call. Fail-open if the FS is unavailable.
+if (!cps_rate_limit('ai:' . cps_visitor_hash(), 20, 60)) {
+    http_response_code(429);
+    cps_json(array('answer' => 'Rate limit exceeded — please wait a minute before asking again.'));
+}
+cps_track_event('ai_proxy');
+
 // 1. Load API key from config (loaded by bootstrap)
 $API_KEY = cps_require_key(
     isset($ai_config) ? $ai_config : array(),
