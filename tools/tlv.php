@@ -40,9 +40,9 @@ if (isset($_POST['tlv']) && $_POST['tlv'] != '') {
                 $bytes = hexdec($lenByte) - 128;
                 $lengthHex = substr($hex, $i, $bytes * 2);
                 $i += $bytes * 2;
-                $length = hexdec($lengthHex);
+                $length = (int) hexdec($lengthHex);
             } else {
-                $length = hexdec($lenByte);
+                $length = (int) hexdec($lenByte);
             }
 
             // Parse Value
@@ -57,7 +57,7 @@ if (isset($_POST['tlv']) && $_POST['tlv'] != '') {
         }
         $parsedData = $tempResults;
 
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         $error = "An error occurred while parsing the TLV structure.";
     }
 }

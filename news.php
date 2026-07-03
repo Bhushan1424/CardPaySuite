@@ -20,7 +20,8 @@
             </header>
 
             <?php
-            $apiKey = "936c49b4ac4bdc0318b0b1eead197028";
+            include 'config.php';
+            $apiKey = $news_config['gnews_api_key'];
             $cacheFile = "cache/news.json";
             $cacheTime = 1200; // 20 minutes
 
@@ -60,16 +61,16 @@
                         
                         <div class="news-card glass-panel">
                             <div class="news-image-wrapper">
-                                <img src="<?php echo $image; ?>" alt="News Image" onerror="this.src='/assets/news-default.png'">
-                                <div class="source-badge"><?php echo $source; ?></div>
+                                <img src="<?php echo htmlspecialchars($image); ?>" alt="News Image" onerror="this.src='/assets/news-default.png'">
+                                <div class="source-badge"><?php echo htmlspecialchars($source); ?></div>
                             </div>
-                            
+
                             <div class="news-content">
-                                <div class="news-date"><?php echo $date; ?></div>
-                                <h3 class="news-title"><?php echo $title; ?></h3>
-                                <p class="news-excerpt"><?php echo $desc; ?></p>
-                                
-                                <a href="<?php echo $link; ?>" target="_blank" class="btn-read-more">
+                                <div class="news-date"><?php echo htmlspecialchars($date); ?></div>
+                                <h3 class="news-title"><?php echo htmlspecialchars($title); ?></h3>
+                                <p class="news-excerpt"><?php echo htmlspecialchars($desc); ?></p>
+
+                                <a href="<?php echo htmlspecialchars($link); ?>" target="_blank" class="btn-read-more">
                                     Read Article <i class="fa-solid fa-arrow-right"></i>
                                 </a>
                             </div>

@@ -1,10 +1,12 @@
 <?php
 
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET");
 
 $bin = $_GET['bin'] ?? '';
 
-if(strlen($bin) < 6){
+if(!ctype_digit($bin) || strlen($bin) < 6){
     echo json_encode(["error"=>"Invalid BIN"]);
     exit;
 }
