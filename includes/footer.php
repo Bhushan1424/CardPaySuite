@@ -20,11 +20,11 @@
     .ai-fab {
         position: relative;
         width: 60px; height: 60px;
-        background: linear-gradient(135deg, #6366f1, #a855f7);
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
         border-radius: 50%;
         cursor: pointer;
         display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        box-shadow: 0 10px 25px rgba(var(--accent-primary-rgb), 0.35);
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
         pointer-events: auto; /* Re-enable clicks for the button */
         z-index: 100;
@@ -85,9 +85,9 @@
         border-bottom-left-radius: 2px;
     }
 
-    .user-msg { 
-        background: linear-gradient(135deg, #6366f1, #a855f7); 
-        color: white; align-self: flex-end; 
+    .user-msg {
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        color: white; align-self: flex-end;
         border-bottom-right-radius: 2px;
     }
 
