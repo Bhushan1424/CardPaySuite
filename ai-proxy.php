@@ -4,25 +4,16 @@
  * Updated: Switched to Llama 3.1 Instant for maximum stability.
  */
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+require __DIR__ . '/includes/bootstrap.php';
 
-// 1. Load Config
-if (file_exists('config.php')) {
-    include 'config.php';
-} else {
-    echo json_encode(array('answer' => 'Configuration error: config.php missing.'));
-    exit;
-}
+cps_cors('POST');
 
-if (!isset($ai_config['groq_api_key']) || empty($ai_config['groq_api_key'])) {
-    echo json_encode(array('answer' => 'Configuration Error: groq_api_key missing in config.php.'));
-    exit;
-}
-
-$API_KEY = $ai_config['groq_api_key'];
+// 1. Load API key from config (loaded by bootstrap)
+$API_KEY = cps_require_key(
+    isset($ai_config) ? $ai_config : array(),
+    'groq_api_key',
+    array('answer' => 'Configuration Error: groq_api_key missing in config.php.')
+);
 
 // 2. MODEL LIST (In order of preference)
 // We try the newest, fastest model first.
@@ -38,8 +29,7 @@ $input = json_decode($inputJSON, true);
 $userQuestion = isset($input['question']) ? $input['question'] : '';
 
 if (empty($userQuestion)) {
-    echo json_encode(array('answer' => 'Please ask a question first!'));
-    exit;
+    cps_json(array('answer' => 'Please ask a question first!'));
 }
 
 // 4. System Prompt
@@ -47,7 +37,7 @@ $systemPrompt = "You are the official AI Guide for 'CardPay Suite'. You are an e
 
 // 5. Loop through models until one works
 foreach ($model_attempts as $MODEL) {
-    
+
     $payload = array(
         "model" => $MODEL,
         "messages" => array(
@@ -72,7 +62,7 @@ foreach ($model_attempts as $MODEL) {
             "header"  => "Content-Type: application/json\r\n" . "Authorization: Bearer " . $API_KEY . "\r\n",
             "method"  => "POST",
             "content" => $jsonPayload,
-            "ignore_errors" => true 
+            "ignore_errors" => true
         )
     );
 
@@ -82,12 +72,10 @@ foreach ($model_attempts as $MODEL) {
     if ($response !== FALSE) {
         $result = json_decode($response, true);
         if (isset($result['choices'][0]['message']['content'])) {
-            echo json_encode(array('answer' => $result['choices'][0]['message']['content']));
-            exit; // Success! Stop looking for other models.
+            cps_json(array('answer' => $result['choices'][0]['message']['content'])); // Success! Stop looking.
         }
     }
 }
 
 // 6. Final Fallback if NO models work
-echo json_encode(array('answer' => "AI Error: All supported models are currently unavailable. Please check your Groq API key."));
-?>
+cps_json(array('answer' => "AI Error: All supported models are currently unavailable. Please check your Groq API key."));
