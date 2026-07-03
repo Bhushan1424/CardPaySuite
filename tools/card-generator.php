@@ -1,7 +1,5 @@
 <?php include '../includes/header.php'; ?>
 
-<!-- Link Custom CSS -->
-<link rel="stylesheet" href="/assets/css/simulator.css">
 
 <div class="page-wrapper">
     <section class="tools-page-section">
@@ -76,206 +74,9 @@
     </section>
 </div>
 
-<style>
-    /* --- Page Layout --- */
-    .page-wrapper {
-        min-height: calc(100vh - 160px);
-        display: flex;
-        flex-direction: column;
-    }
 
-    .tools-page-section {
-        padding: 80px 0;
-        color: var(--text-main);
-    }
-
-    .tool-main-container {
-        animation: fadeInUp 0.5s ease-out;
-    }
-
-    .tool-control-card {
-        padding: 20px;
-        border-radius: 20px;
-        margin-bottom: 40px;
-    }
-
-    .control-flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .control-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .control-group label {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        font-weight: 600;
-    }
-
-    /* FIXED: Dropdown styling to match Base64 tool exactly */
-    .mode-select {
-        background: rgba(0, 0, 0, 0.4);
-        border: 1px solid var(--border-color);
-        color: white;
-        padding: 8px 15px;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        outline: none;
-        transition: var(--transition);
-    }
-    .mode-select:focus {
-        border-color: var(--accent-primary);
-        box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    /* --- Virtual Card Design --- */
-    .card-visual-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        margin-bottom: 60px;
-    }
-
-    .virtual-card {
-        width: 400px;
-        height: 250px;
-        border-radius: 24px;
-        position: relative;
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-
-    .card-inner {
-        width: 100%;
-        height: 100%;
-        border-radius: 24px;
-        padding: 30px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        color: white;
-        box-sizing: border-box;
-    }
-
-    /* Brand Colors */
-    .virtual-card.visa { background: linear-gradient(135deg, #1a1f71 0%, #003f5c 100%); }
-    .virtual-card.mastercard { background: linear-gradient(135deg, #eb001b 0%, #cf8000 100%); }
-    .virtual-card.amex { background: linear-gradient(135deg, #0072a3 0%, #003f5c 100%); }
-    .virtual-card.discover { background: linear-gradient(135deg, #f68121 0%, #d64d00 100%); }
-
-    .card-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
-
-    .chip {
-        width: 50px;
-        height: 38px;
-        background: linear-gradient(135deg, #fcd34d, #b45309);
-        border-radius: 8px;
-        position: relative;
-    }
-
-    .brand-logo {
-        font-size: 1.5rem;
-        font-weight: 800;
-        font-style: italic;
-        text-transform: uppercase;
-    }
-
-    .card-number {
-        font-family: 'Courier New', monospace;
-        font-size: 1.8rem;
-        letter-spacing: 4px;
-        text-align: center;
-        margin: 40px 0;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    /* FIXED: Alignment of bottom elements */
-    .card-bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        width: 100%;
-    }
-
-    .bottom-group {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .bottom-group .label {
-        font-size: 0.6rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        opacity: 0.7;
-        margin-bottom: 4px;
-    }
-
-    .bottom-group .value {
-        font-size: 0.9rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
-
-    /* --- Static Cards Grid --- */
-    .static-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 15px;
-    }
-
-    .static-card-item {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--border-color);
-        padding: 12px 20px;
-        border-radius: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: var(--transition);
-        cursor: pointer;
-    }
-
-    .static-card-item:hover {
-        background: rgba(99, 102, 241, 0.1);
-        border-color: var(--accent-primary);
-        transform: translateX(5px);
-    }
-
-    .static-card-item span {
-        font-family: 'Courier New', monospace;
-        font-size: 1rem;
-        color: var(--text-main);
-    }
-
-    .copy-badge {
-        font-size: 0.7rem;
-        background: var(--bg-surface);
-        padding: 4px 8px;
-        border-radius: 6px;
-        color: var(--text-muted);
-        border: 1px solid var(--border-color);
-    }
-
-    @media (max-width: 480px) {
-        .virtual-card { width: 300px; height: 190px; }
-        .card-number { font-size: 1.3rem; }
-    }
-</style>
-
+<!-- Shared Luhn utility (window.CardPay) -->
+<script src="/assets/js/luhn.js"></script>
 <script>
 const cardsData = {
     visa: ["4111 1111 1111 1111", "4000 0566 5566 5556", "4000 0000 0000 0002"],
@@ -326,7 +127,7 @@ function generateCard() {
     while(number.length < length - 1) {
         number += Math.floor(Math.random()*10);
     }
-    number += luhnCheckDigit(number);
+    number += CardPay.luhnCheckDigit(number);
 
     const formatted = formatCard(number);
     document.getElementById("displayNumber").innerText = formatted;
@@ -342,18 +143,6 @@ function updateCardVisuals(brand) {
 
 function formatCard(number) {
     return number.replace(/(.{4})/g, '$1 ').trim();
-}
-
-function luhnCheckDigit(number) {
-    let sum = 0;
-    let alt = true;
-    for(let i=number.length-1; i>=0; i--) {
-        let n = parseInt(number.charAt(i));
-        if(alt) { n *= 2; if(n>9) n -= 9; }
-        sum += n;
-        alt = !alt;
-    }
-    return (10 - (sum % 10)) % 10;
 }
 
 function copyCurrentCard() {
