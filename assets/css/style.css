@@ -4,28 +4,36 @@
 */
 
 :root {
-    /* --- Softened Dark Mode Palette --- */
-    /* Backgrounds: Moved from pitch black to a deep, muted slate */
-    --bg-darkest: #111827;      /* Softened deep navy (instead of #0b0f1a) */
-    --bg-dark: #1f2937;         /* Medium slate */
-    --bg-surface: #374151;      /* Lighter slate for cards */
-    
-    /* Accents: Kept the same, but they will feel softer against the lighter background */
-    --accent-primary: #6366f1;   
-    --accent-secondary: #a855f7; 
-    --accent-glow: rgba(99, 102, 241, 0.2); /* Reduced opacity for softer glow */
-    
-    /* Text Colors: Shifted from pure white to soft silvers/grays */
-    --text-bright: #f1f5f9;     /* Soft silver (instead of pure white) */
-    --text-main: #cbd5e1;       /* Muted silver-blue */
-    --text-muted: #94a3b8;      /* Slate gray */
-    
-    /* UI Elements - Blended Glassmorphism */
-    --border-color: rgba(255, 255, 255, 0.05); /* Even more transparent borders */
-    --glass-bg: rgba(31, 41, 55, 0.6);         /* More transparent background */
-    --glass-blur: blur(16px);                  /* Increased blur for a smoother feel */
-    --radius-lg: 16px;
-    --radius-md: 8px;
+    /* --- Institutional Dark Palette --- */
+    /* Backgrounds: near-black navy, precise rather than soft */
+    --bg-darkest: #05070c;
+    --bg-dark: #0b111c;
+    --bg-surface: #141b28;
+
+    /* Accents: single crisp blue family (no purple) */
+    --accent-primary: #2f6feb;
+    --accent-primary-rgb: 47, 111, 235;
+    --accent-secondary: #0ea5c8;
+    --accent-secondary-rgb: 14, 165, 200;
+    --accent-glow: rgba(47, 111, 235, 0.14);
+
+    /* Semantic status colors (fixed regardless of accent theme) */
+    --status-success: #4ade80;
+    --status-success-rgb: 74, 222, 128;
+    --status-error: #f87171;
+    --status-error-rgb: 248, 113, 113;
+
+    /* Text Colors: cool blue-grays instead of warm silvers */
+    --text-bright: #f8fafc;
+    --text-main: #b9c3d6;
+    --text-muted: #7c8aa0;
+
+    /* UI Elements - crisper, less blurred glass */
+    --border-color: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(15, 21, 33, 0.78);
+    --glass-blur: blur(8px);
+    --radius-lg: 12px;
+    --radius-md: 6px;
     --transition: all 0.2s ease-in-out;
 }
 
@@ -107,4 +115,59 @@ body {
 
 .section-padding {
     padding: 80px 0;
+}
+
+/* --- Site Chrome: sticky header + nav (global, loaded on every page) --- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.menu {
+    display: flex;
+    gap: 20px;
+}
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-link:hover {
+    color: var(--accent-primary);
+}
+
+@media (max-width: 640px) {
+    .nav-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 16px;
+    }
+    .nav-link {
+        font-size: 0.85rem;
+    }
 }
