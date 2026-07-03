@@ -70,4 +70,20 @@
     .nav-link:hover {
         color: var(--accent-primary);
     }
+
+    @media (max-width: 640px) {
+        .nav-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        .menu {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 16px;
+        }
+        .nav-link {
+            font-size: 0.85rem;
+        }
+    }
 </style>
