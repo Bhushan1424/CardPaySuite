@@ -1,7 +1,7 @@
 <footer class="site-footer glass-panel">
     <div class="container footer-content">
         <div class="footer-left">
-            <p>© 2026 <strong>Card Pay Suite</strong> <span class="badge">v1.0.0-beta</span></p>
+            <p>© 2026 <strong>Card Pay Suite</strong> <span class="badge">v1.0.0-beta</span> · <a href="/privacy.php" class="footer-link">Privacy</a></p>
         </div>
     </div>
 </footer>
@@ -39,13 +39,6 @@
 </div>
 
 <script src="/assets/js/ai-guide.js"></script>
-<?php
-// Optional Cloudflare Web Analytics beacon (Category A). Renders only when
-// CLOUDFLARE_ANALYTICS_TOKEN is set; the site works identically without it.
-if (!empty($analytics_config['cloudflare_token'])):
-?>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "<?php echo htmlspecialchars($analytics_config['cloudflare_token']); ?>"}'></script>
-<?php endif; ?>
+<?php include __DIR__ . '/consent-banner.php'; ?>
 </body>
 </html>

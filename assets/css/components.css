@@ -1144,3 +1144,82 @@
     .virtual-card { width: 300px; height: 190px; }
     .card-number { font-size: 1.3rem; }
 }
+
+/* ============================================================
+   COOKIE CONSENT BANNER (gates Google Analytics until accepted)
+   Markup: includes/consent-banner.php · Logic: assets/js/consent.js
+   ============================================================ */
+.cookie-consent {
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    max-width: 580px;
+    margin: 0 auto;
+    z-index: 10050; /* above the AI widget (10001/10002) */
+    display: none;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 20px;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+.cookie-consent.show { display: flex; }
+
+.cookie-text {
+    flex: 1;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-main);
+}
+.cookie-text strong { color: var(--text-bright); }
+
+.cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.cookie-btn {
+    padding: 9px 18px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+}
+.cookie-decline {
+    background: transparent;
+    color: var(--text-muted);
+}
+.cookie-decline:hover {
+    color: var(--text-bright);
+    border-color: var(--text-muted);
+}
+.cookie-accept {
+    border: none;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+}
+.cookie-accept:hover { filter: brightness(1.1); }
+
+.cookie-link {
+    color: var(--accent-primary);
+    text-decoration: underline;
+}
+.cookie-link:hover { color: var(--accent-secondary); }
+
+@media (max-width: 560px) {
+    .cookie-consent {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 12px;
+    }
+    .cookie-actions { justify-content: center; }
+}
