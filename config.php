@@ -1,5 +1,33 @@
 <?php
 // config.php
+//
+// Secrets are read from environment variables. On hosts where real env vars are
+// awkward/unreliable (e.g. shared hosting), a local .env file at the project root
+// supplies them instead. Keep .env out of version control (it is gitignored) and
+// blocked from direct HTTP access (see the root .htaccess).
+
+if (!function_exists('load_env_file')) {
+    function load_env_file($path) {
+        if (!file_exists($path)) {
+            return;
+        }
+        foreach (file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+            $line = trim($line);
+            if ($line === '' || $line[0] === '#' || strpos($line, '=') === false) {
+                continue;
+            }
+            list($key, $value) = explode('=', $line, 2);
+            $key = trim($key);
+            $value = trim($value);
+            if (getenv($key) === false) { // real env vars win over the .env file
+                putenv("$key=$value");
+            }
+        }
+    }
+}
+
+load_env_file(__DIR__ . '/.env');
+
 $ai_config = array(
     'groq_api_key' => getenv('GROQ_API_KEY') // Removed the extra semicolon here
 );
