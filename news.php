@@ -18,15 +18,17 @@
             </header>
 
             <?php
-            include 'config.php';
-            $apiKey = $news_config['gnews_api_key'];
-            $cacheFile = "cache/news.json";
+            // $news_config is loaded globally by includes/header.php -> bootstrap.php.
+            $apiKey = !empty($news_config['gnews_api_key']) ? $news_config['gnews_api_key'] : '';
+            $cacheDir = __DIR__ . '/cache';
+            $cacheFile = $cacheDir . '/news.json';
             $cacheTime = 1200; // 20 minutes
+            $data = array();
 
             /* ---------- LOAD CACHE OR API ---------- */
             if(file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTime)){
                 $data = json_decode(file_get_contents($cacheFile), true);
-            } else {
+            } elseif($apiKey !== ''){
                 $query = urlencode('fintech OR payments OR banking OR "digital payments" OR mastercard OR visa');
                 $url = "https://gnews.io/api/v4/search?q=".$query."&lang=en&max=10&token=".$apiKey;
 
@@ -40,6 +42,7 @@
                 $data = json_decode($response, true);
 
                 if(isset($data['articles'])){
+                    if(!is_dir($cacheDir)){ @mkdir($cacheDir, 0775, true); }
                     file_put_contents($cacheFile, $response);
                 }
             }
