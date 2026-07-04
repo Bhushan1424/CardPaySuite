@@ -1208,6 +1208,12 @@
 }
 .cookie-accept:hover { filter: brightness(1.1); }
 
+.cookie-link {
+    color: var(--accent-primary);
+    text-decoration: underline;
+}
+.cookie-link:hover { color: var(--accent-secondary); }
+
 @media (max-width: 560px) {
     .cookie-consent {
         flex-direction: column;

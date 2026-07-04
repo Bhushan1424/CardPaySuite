@@ -7,7 +7,8 @@ if (!empty($analytics_config['ga_measurement_id'])):
 <div id="cookie-consent" class="cookie-consent" role="dialog" aria-live="polite" aria-label="Cookie consent">
     <p class="cookie-text">
         We use <strong>Google Analytics</strong> cookies to understand how the site is used.
-        No personal data is sold. You can decline and keep browsing.
+        No personal data is sold. You can decline and keep browsing — see our
+        <a href="/privacy.php" class="cookie-link">privacy policy</a>.
     </p>
     <div class="cookie-actions">
         <button id="cookie-decline" class="cookie-btn cookie-decline" type="button">Decline</button>

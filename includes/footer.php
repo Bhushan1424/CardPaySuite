@@ -1,7 +1,7 @@
 <footer class="site-footer glass-panel">
     <div class="container footer-content">
         <div class="footer-left">
-            <p>© 2026 <strong>Card Pay Suite</strong> <span class="badge">v1.0.0-beta</span></p>
+            <p>© 2026 <strong>Card Pay Suite</strong> <span class="badge">v1.0.0-beta</span> · <a href="/privacy.php" class="footer-link">Privacy</a></p>
         </div>
     </div>
 </footer>
