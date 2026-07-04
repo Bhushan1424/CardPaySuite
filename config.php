@@ -8,12 +8,16 @@ $news_config = array(
     'gnews_api_key' => getenv('GNEWS_API_KEY')
 );
 
-// Tracking / analytics. All optional and env-driven (no secrets in source).
-//  - GA_MEASUREMENT_ID : Google Analytics 4 measurement id (e.g. G-XXXXXXXXXX);
-//                        when set, header.php renders the gtag.js snippet.
+// Tracking / analytics.
+//  - GA_MEASUREMENT_ID : Google Analytics 4 measurement id (e.g. G-XXXXXXXXXX).
+//    A GA4 measurement id is a PUBLIC client-side id (it ships in the page HTML),
+//    so it is safe to keep the live id here as the default; an env var still wins.
 //  - TRACKING_SALT     : salt for the per-visitor hash used by the proxy rate limiter.
+$ga_measurement_id = getenv('GA_MEASUREMENT_ID');
 $analytics_config = array(
-    'ga_measurement_id' => getenv('GA_MEASUREMENT_ID'),
+    'ga_measurement_id' => ($ga_measurement_id !== false && $ga_measurement_id !== '')
+        ? $ga_measurement_id
+        : 'G-Y5R9TDTZ5X',
     'tracking_salt'     => getenv('TRACKING_SALT')
 );
 ?>

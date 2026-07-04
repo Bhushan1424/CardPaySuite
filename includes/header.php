@@ -11,7 +11,7 @@ require_once __DIR__ . '/bootstrap.php';
 
     <?php if (!empty($analytics_config['ga_measurement_id'])):
         $gaId = htmlspecialchars($analytics_config['ga_measurement_id'], ENT_QUOTES); ?>
-    <!-- Google Analytics 4 (gtag.js) — renders only when GA_MEASUREMENT_ID is set on the host -->
+    <!-- Google Analytics 4 (gtag.js) — id comes from config.php (default) or the GA_MEASUREMENT_ID env override -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gaId; ?>"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
