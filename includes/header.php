@@ -1,14 +1,26 @@
 <?php
-// Bootstrap shared config + libs, then log this pageview (Category A analytics).
-// header.php is included by every page, so this is the single tracking point.
+// Bootstrap shared config + libs. header.php is the single global include, so the
+// analytics tag (and config for proxy rate limiting) is loaded here once for every page.
 require_once __DIR__ . '/bootstrap.php';
-cps_track_event('pageview');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <?php if (!empty($analytics_config['ga_measurement_id'])):
+        $gaId = htmlspecialchars($analytics_config['ga_measurement_id'], ENT_QUOTES); ?>
+    <!-- Google Analytics 4 (gtag.js) — renders only when GA_MEASUREMENT_ID is set on the host -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gaId; ?>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '<?php echo $gaId; ?>');
+    </script>
+    <?php endif; ?>
+
     <title>Card Pay Suite</title>
 
     <!-- Global stylesheets (absolute paths so they resolve on every page depth) -->

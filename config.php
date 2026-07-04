@@ -9,12 +9,11 @@ $news_config = array(
 );
 
 // Tracking / analytics. All optional and env-driven (no secrets in source).
-//  - CLOUDFLARE_ANALYTICS_TOKEN : enables the optional Cloudflare Web Analytics beacon.
-//  - STATS_TOKEN                 : required to view the /stats.php dashboard (?token=...).
-//  - TRACKING_SALT              : salt for the daily visitor hash (set any random string).
+//  - GA_MEASUREMENT_ID : Google Analytics 4 measurement id (e.g. G-XXXXXXXXXX);
+//                        when set, header.php renders the gtag.js snippet.
+//  - TRACKING_SALT     : salt for the per-visitor hash used by the proxy rate limiter.
 $analytics_config = array(
-    'cloudflare_token' => getenv('CLOUDFLARE_ANALYTICS_TOKEN'),
-    'stats_token'      => getenv('STATS_TOKEN'),
-    'tracking_salt'    => getenv('TRACKING_SALT')
+    'ga_measurement_id' => getenv('GA_MEASUREMENT_ID'),
+    'tracking_salt'     => getenv('TRACKING_SALT')
 );
 ?>

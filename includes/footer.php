@@ -39,13 +39,5 @@
 </div>
 
 <script src="/assets/js/ai-guide.js"></script>
-<?php
-// Optional Cloudflare Web Analytics beacon (Category A). Renders only when
-// CLOUDFLARE_ANALYTICS_TOKEN is set; the site works identically without it.
-if (!empty($analytics_config['cloudflare_token'])):
-?>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "<?php echo htmlspecialchars($analytics_config['cloudflare_token']); ?>"}'></script>
-<?php endif; ?>
 </body>
 </html>
