@@ -39,5 +39,6 @@
 </div>
 
 <script src="/assets/js/ai-guide.js"></script>
+<?php include __DIR__ . '/consent-banner.php'; ?>
 </body>
 </html>

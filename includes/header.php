@@ -11,14 +11,9 @@ require_once __DIR__ . '/bootstrap.php';
 
     <?php if (!empty($analytics_config['ga_measurement_id'])):
         $gaId = htmlspecialchars($analytics_config['ga_measurement_id'], ENT_QUOTES); ?>
-    <!-- Google Analytics 4 (gtag.js) — id comes from config.php (default) or the GA_MEASUREMENT_ID env override -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gaId; ?>"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', '<?php echo $gaId; ?>');
-    </script>
+    <!-- GA4 id for the consent-gated loader in includes/consent-banner.php.
+         gtag.js is loaded ONLY after the visitor accepts cookies (no GA cookies before then). -->
+    <script>window.CPS_GA_ID = "<?php echo $gaId; ?>";</script>
     <?php endif; ?>
 
     <title>Card Pay Suite</title>
