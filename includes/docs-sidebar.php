@@ -6,7 +6,7 @@
 
         <?php $activeDoc = 'iso8583'; include '../includes/docs-sidebar.php'; ?>
 
-    Valid $activeDoc keys: index, lifecycle, iso8583, emv-tlv, glossary.
+    Valid $activeDoc keys: index, lifecycle, iso8583, iso20022, emv-tlv, glossary.
     Add a new docs page by adding one <a> below — updates all pages at once.
 */
 $activeDoc = isset($activeDoc) ? $activeDoc : '';
@@ -16,8 +16,9 @@ $docsNav = array(
         array('key' => 'lifecycle', 'href' => 'transaction-lifecycle.php', 'icon' => 'fa-route',     'label' => 'Transaction Flow'),
     ),
     'Technical Standards' => array(
-        array('key' => 'iso8583', 'href' => 'iso8583.php', 'icon' => 'fa-code',      'label' => 'ISO 8583 Standard'),
-        array('key' => 'emv-tlv', 'href' => 'emv-tlv.php', 'icon' => 'fa-microchip', 'label' => 'EMV & TLV Logic'),
+        array('key' => 'iso8583',  'href' => 'iso8583.php',  'icon' => 'fa-code',       'label' => 'ISO 8583 Standard'),
+        array('key' => 'iso20022', 'href' => 'iso20022.php', 'icon' => 'fa-file-code',  'label' => 'ISO 20022 Standard'),
+        array('key' => 'emv-tlv',  'href' => 'emv-tlv.php',  'icon' => 'fa-microchip',  'label' => 'EMV & TLV Logic'),
     ),
     'Reference' => array(
         array('key' => 'glossary', 'href' => 'glossary.php', 'icon' => 'fa-list', 'label' => 'Glossary of Terms'),
