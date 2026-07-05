@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'ISO 8583 Explained';
+$pageDescription = 'Understand the ISO 8583 card messaging standard — MTI, bitmaps, and data elements broken down with clear examples.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

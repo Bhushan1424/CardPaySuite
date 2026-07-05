@@ -1,4 +1,7 @@
-<?php include 'includes/header.php'; ?>
+<?php
+$pageDescription = 'Master payment processing with CardPay Suite — an interactive transaction simulator, ISO 8583, EMV & ISO 20022 guides, and free developer tools for fintech engineers and students.';
+include 'includes/header.php';
+?>
 
 <!-- Link Custom CSS -->
 <link rel="stylesheet" href="assets/css/simulator.css">

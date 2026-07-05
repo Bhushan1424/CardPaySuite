@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'ISO 8583 Parser';
+$pageDescription = 'Decode ISO 8583 card authorization messages online — analyze the MTI, bitmap, and every data element.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

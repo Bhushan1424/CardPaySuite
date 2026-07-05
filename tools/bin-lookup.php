@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'BIN Lookup';
+$pageDescription = 'Identify a card issuer, network, and country from its Bank Identification Number (BIN / IIN).';
+include '../includes/header.php';
+?>
 
 
 <!-- WRAPPER FOR STICKY FOOTER -->

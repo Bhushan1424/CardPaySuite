@@ -36,6 +36,17 @@ $news_config = array(
     'gnews_api_key' => getenv('GNEWS_API_KEY')
 );
 
+// Site / SEO.
+//  - base_url : canonical origin used to build absolute URLs for canonical tags,
+//    Open Graph / Twitter cards, and sitemap.xml. No trailing slash. An env var
+//    (SITE_BASE_URL) wins so staging/preview hosts can override it.
+$site_base_url = getenv('SITE_BASE_URL');
+$site_config = array(
+    'base_url' => ($site_base_url !== false && $site_base_url !== '')
+        ? rtrim($site_base_url, '/')
+        : 'https://cardpaysuite.com'
+);
+
 // Tracking / analytics.
 //  - GA_MEASUREMENT_ID : Google Analytics 4 measurement id (e.g. G-XXXXXXXXXX).
 //    A GA4 measurement id is a PUBLIC client-side id (it ships in the page HTML),
