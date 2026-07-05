@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'ISO 20022 Parser';
+$pageDescription = 'Decode ISO 20022 XML messages (pacs, pain, camt) and inspect every element with friendly, human-readable names.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

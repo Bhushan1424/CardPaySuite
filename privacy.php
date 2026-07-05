@@ -1,4 +1,8 @@
-<?php include 'includes/header.php'; ?>
+<?php
+$pageTitle = 'Privacy Policy';
+$pageDescription = 'How CardPay Suite handles analytics, cookies, and your data.';
+include 'includes/header.php';
+?>
 
 <div class="page-wrapper">
     <section class="tools-page-section">

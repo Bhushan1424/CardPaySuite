@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Luhn Validator';
+$pageDescription = 'Check whether a card number passes the Luhn checksum algorithm used to catch mistyped card numbers.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

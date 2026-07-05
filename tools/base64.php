@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Base64 Encoder / Decoder';
+$pageDescription = 'Convert data to and from Base64 quickly and privately in your browser.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

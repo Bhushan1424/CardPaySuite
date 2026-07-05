@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'EMV TLV Explained';
+$pageDescription = 'Learn EMV chip data and the Tag-Length-Value (TLV) encoding used in chip-and-PIN card transactions.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

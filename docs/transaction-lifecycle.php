@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Transaction Lifecycle';
+$pageDescription = 'Follow a card payment step by step from POS terminal to issuing bank — authorization, clearing, and settlement explained.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

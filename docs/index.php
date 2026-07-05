@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Learning Center';
+$pageDescription = 'Learn payment processing from the ground up — acquirers, issuers, switches, ISO 8583, EMV, and ISO 20022 explained with clear, interactive guides.';
+include '../includes/header.php';
+?>
 
 <div class="page-wrapper">
     <section class="docs-section">

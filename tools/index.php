@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Developer Tools';
+$pageDescription = 'Free fintech developer tools — ISO 8583 & ISO 20022 parsers, BIN lookup, EMV TLV decoder, test card generator, Base64, and Luhn validator.';
+include '../includes/header.php';
+?>
 
 
 <section class="tools-page-section">

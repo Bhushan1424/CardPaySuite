@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Test Card Generator';
+$pageDescription = 'Generate Luhn-valid test card numbers for development and QA. For testing only — these are not real, chargeable cards.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

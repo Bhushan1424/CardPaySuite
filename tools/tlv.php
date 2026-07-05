@@ -1,5 +1,7 @@
-<?php 
-include '../includes/header.php'; 
+<?php
+$pageTitle = 'EMV TLV Decoder';
+$pageDescription = 'Parse EMV TLV (Tag-Length-Value) structures from chip-and-PIN transactions with a full EMV tag reference.';
+include '../includes/header.php';
 
 // --- LOGIC SECTION: Handle Parsing before HTML renders ---
 $parsedData = [];

@@ -1,0 +1,11 @@
+# CardPay Suite — robots.txt
+# Educational site: allow crawling of all public pages.
+
+User-agent: *
+Allow: /
+
+# Server-side proxies return JSON / rate-limited API responses, not indexable content.
+Disallow: /ai-proxy.php
+Disallow: /bin-proxy.php
+
+Sitemap: https://cardpaysuite.com/sitemap.xml

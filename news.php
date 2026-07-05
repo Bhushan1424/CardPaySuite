@@ -1,4 +1,8 @@
-<?php include 'includes/header.php'; ?>
+<?php
+$pageTitle = 'Fintech News Radar';
+$pageDescription = 'A live feed of the latest global payments, ISO standards, and digital banking news — curated for fintech engineers and students.';
+include 'includes/header.php';
+?>
 
 
 <div class="page-wrapper">

@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'Payments Glossary';
+$pageDescription = 'Definitions of key card payment and fintech terms — from acquirer and BIN to cryptogram and TLV.';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">

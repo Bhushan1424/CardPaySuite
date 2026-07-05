@@ -1,4 +1,8 @@
-<?php include '../includes/header.php'; ?>
+<?php
+$pageTitle = 'ISO 20022 Explained';
+$pageDescription = 'An introduction to ISO 20022 — the XML-based messaging standard for modern payments (pacs, pain, camt).';
+include '../includes/header.php';
+?>
 
 
 <div class="page-wrapper">
