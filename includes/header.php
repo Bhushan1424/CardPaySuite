@@ -18,6 +18,11 @@ require_once __DIR__ . '/bootstrap.php';
 
     <title>Card Pay Suite</title>
 
+    <!-- Favicons: SVG for modern browsers, .ico fallback (16/32/48), touch icon for iOS -->
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
     <!-- Global stylesheets (absolute paths so they resolve on every page depth) -->
     <!-- style.css = tokens + primitives + site chrome; components.css = shared page/tool/docs patterns -->
     <link rel="stylesheet" href="/assets/css/style.css?v=<?php echo time(); ?>">

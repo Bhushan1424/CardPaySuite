@@ -57,12 +57,14 @@
                         $desc = $article['description'] ?? 'No description available for this article.';
                         $source = $article['source']['name'] ?? 'Unknown Source';
                         $date = date("M d, Y", strtotime($article['publishedAt']));
-                        $image = $article['image'] ?? "/assets/news-default.png";
+                        // GNews can return "" (not just null) for image; empty src makes the
+                        // browser re-request the page itself, so check with !empty().
+                        $image = !empty($article['image']) ? $article['image'] : "/assets/img/news-default.svg";
                     ?>
                         
                         <div class="news-card glass-panel">
                             <div class="news-image-wrapper">
-                                <img src="<?php echo htmlspecialchars($image); ?>" alt="News Image" onerror="this.src='/assets/news-default.png'">
+                                <img src="<?php echo htmlspecialchars($image); ?>" alt="News Image" loading="lazy" onerror="this.onerror=null; this.src='/assets/img/news-default.svg';">
                                 <div class="source-badge"><?php echo htmlspecialchars($source); ?></div>
                             </div>
 
