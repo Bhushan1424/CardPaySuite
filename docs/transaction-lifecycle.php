@@ -72,7 +72,6 @@ include '../includes/header.php';
                         <div class="timeline-item">
                             <div class="timeline-dot">4</div>
                             <div class="timeline-content glass-panel">
-                                <div class="fa-solid fa-globe"></div>
                                 <div class="step-header">
                                     <i class="fa-solid fa-globe"></i>
                                     <h4>The Card Network (Verification)</h4>
