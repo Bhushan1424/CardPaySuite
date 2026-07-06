@@ -140,7 +140,7 @@ if (file_exists('../data/emv-tags.json')) {
                                         <tr>
                                             <td class="field-id"><?php echo $row['tag']; ?></td>
                                             <td style="color: var(--text-muted);"><?php echo $row['length']; ?></td>
-                                            <td style="font-family: 'Courier New', monospace; color: #4ade80;"><?php echo $row['value']; ?></td>
+                                            <td style="font-family: var(--font-mono); color: var(--text-bright);"><?php echo $row['value']; ?></td>
                                             <td><?php echo $tagMap[strtoupper($row['tag'])] ?? 'Unknown Tag'; ?></td>
                                         </tr>
                                     <?php endforeach; ?>

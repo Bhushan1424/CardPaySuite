@@ -11,7 +11,7 @@ include '../includes/header.php';
             
             <!-- TOOL HEADER -->
             <header class="tools-header" style="text-align: center; margin-bottom: 40px;">
-                <h1 class="text-gradient">Card Test Generator</h1>
+                <h1 class="text-gradient">Test Card Generator</h1>
                 <p class="tools-subtitle">Generate mathematically valid card numbers for QA testing and payment gateway integration using the Luhn algorithm.</p>
             </header>
 
@@ -31,7 +31,7 @@ include '../includes/header.php';
                             </select>
                         </div>
                         <button onclick="generateCard()" id="genBtn" class="btn-primary">
-                            <span id="btnText">Generate New Card</span>
+                            <span id="btnText">Generate</span>
                             <i class="fa-solid fa-wand-magic-sparkles"></i>
                         </button>
                     </div>
