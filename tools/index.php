@@ -71,8 +71,8 @@ include '../includes/header.php';
                     <i class="fa-solid fa-microchip"></i>
                 </div>
                 <div class="tool-content">
-                    <h3>Card Generator</h3>
-                    <p>Create valid card numbers for testing and development purposes.</p>
+                    <h3>Test Card Generator</h3>
+                    <p>Create Luhn-valid test card numbers for development and QA — not real, chargeable cards.</p>
                 </div>
                 <a href="/tools/card-generator.php" class="btn-tool">Open Tool <i class="fa-solid fa-arrow-right"></i></a>
             </div>

@@ -4,36 +4,38 @@
 */
 
 :root {
-    /* --- Institutional Dark Palette --- */
-    /* Backgrounds: near-black navy, precise rather than soft */
-    --bg-darkest: #05070c;
-    --bg-dark: #0b111c;
-    --bg-surface: #141b28;
+    /* --- Light Institutional Palette --- */
+    /* Backgrounds: layered off-whites, not harsh pure white */
+    --bg-darkest: #f7f9fc;   /* page background */
+    --bg-dark: #eef2f8;      /* subtle sections */
+    --bg-surface: #ffffff;   /* cards / panels */
 
-    /* Accents: single crisp blue family (no purple) */
-    --accent-primary: #2f6feb;
-    --accent-primary-rgb: 47, 111, 235;
-    --accent-secondary: #0ea5c8;
-    --accent-secondary-rgb: 14, 165, 200;
-    --accent-glow: rgba(47, 111, 235, 0.14);
+    /* Accent: single indigo (solid; gradient reserved for hero heading) */
+    --accent-primary: #4f46e5;
+    --accent-primary-rgb: 79, 70, 229;
+    --accent-secondary: #7c3aed;
+    --accent-secondary-rgb: 124, 58, 237;
+    --accent-glow: rgba(79, 70, 229, 0.16);
 
-    /* Semantic status colors (fixed regardless of accent theme) */
-    --status-success: #4ade80;
-    --status-success-rgb: 74, 222, 128;
-    --status-error: #f87171;
-    --status-error-rgb: 248, 113, 113;
+    /* Semantic status colors (darkened for legibility on light) */
+    --status-success: #16a34a;
+    --status-success-rgb: 22, 163, 74;
+    --status-error: #dc2626;
+    --status-error-rgb: 220, 38, 38;
 
-    /* Text Colors: cool blue-grays instead of warm silvers */
-    --text-bright: #f8fafc;
-    --text-main: #b9c3d6;
-    --text-muted: #7c8aa0;
+    /* Text Colors: dark slate, not pure black */
+    --text-bright: #0f172a;
+    --text-main: #334155;
+    --text-muted: #64748b;
 
-    /* UI Elements - crisper, less blurred glass */
-    --border-color: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(15, 21, 33, 0.78);
-    --glass-blur: blur(8px);
+    /* UI Elements - flat, clean surfaces (glass toned down) */
+    --border-color: rgba(15, 23, 42, 0.10);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-blur: blur(2px);
+    --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
     --radius-lg: 12px;
-    --radius-md: 6px;
+    --radius-md: 8px;
     --transition: all 0.2s ease-in-out;
 }
 
@@ -55,16 +57,16 @@ body {
 /* --- Global UI Components --- */
 
 .glass-panel {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+    background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
+    box-shadow: var(--card-shadow);
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, #fff 30%, var(--accent-primary));
+    background: linear-gradient(120deg, var(--text-bright) 40%, var(--accent-primary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
 }
@@ -90,7 +92,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    background: var(--accent-primary);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -101,7 +103,7 @@ body {
 }
 
 .btn-primary:hover {
-    filter: brightness(1.2);
+    filter: brightness(1.08);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px var(--accent-glow);
 }
@@ -123,6 +125,7 @@ body {
     top: 0;
     z-index: 1000;
     padding: 15px 0;
+    background: var(--bg-surface);
     border-bottom: 1px solid var(--border-color);
 }
 .nav-container {
@@ -132,8 +135,8 @@ body {
 }
 .logo {
     font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
     display: flex;
     align-items: center;
     gap: 10px;
