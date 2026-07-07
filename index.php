@@ -63,15 +63,6 @@ include 'includes/header.php';
             </div>
 
             <div class="control-group">
-                <span class="control-label">Amount (DE4)</span>
-                <div class="amount-pills" id="amountPills">
-                    <button class="amount-btn" data-price="7">$7</button>
-                    <button class="amount-btn" data-price="10">$10</button>
-                    <button class="amount-btn active" data-price="25">$25</button>
-                </div>
-            </div>
-
-            <div class="control-group">
                 <span class="control-label">Mode</span>
                 <div class="mode-toggle" id="modeToggle">
                     <button class="mode-btn active" data-mode="guided"><i class="fa-solid fa-shoe-prints"></i> Guided</button>
@@ -145,7 +136,7 @@ include 'includes/header.php';
                 <div class="teach-panel active" id="tab-narration">
                     <div class="narr-stage" id="narrStage">Ready to begin</div>
                     <h3 class="narr-title" id="narrTitle">Press Start to run a transaction</h3>
-                    <p class="narr-text" id="narrText">Pick a <strong>scenario</strong>, an <strong>amount</strong> and a <strong>mode</strong> above, then press <strong>Start</strong>. In <em>Guided</em> mode you advance one hop at a time and read what happens at each; <em>Auto-play</em> runs the whole flow for you.</p>
+                    <p class="narr-text" id="narrText">Pick a <strong>scenario</strong> and a <strong>mode</strong> above, then press <strong>Start</strong>. In <em>Guided</em> mode you advance one hop at a time and read what happens at each; <em>Auto-play</em> runs the whole flow for you.</p>
                     <div class="narr-iso">
                         <i class="fa-solid fa-microchip"></i>
                         <span id="narrIsoText">ISO 8583 field details will appear here as the message travels. Hover a stage above to see what each party does.</span>

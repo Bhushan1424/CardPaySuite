@@ -100,17 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const rand6 = () => String(Math.floor(Math.random() * 900000) + 100000);
     const isFinished = () => state.step >= STEPS.length - 1;
 
-    /* ---------- Amount selection (feeds DE4) ---------- */
-    const amountBtns = document.querySelectorAll(".amount-btn");
-    amountBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-            if (state.step > -1) resetSim();      // changing the amount restarts the run
-            amountBtns.forEach((b) => b.classList.remove("active"));
-            btn.classList.add("active");
-            state.amount = parseFloat(btn.dataset.price);
-        });
-    });
-
     /* ---------- Inspector helpers ---------- */
     function revealField(key) {
         const row = document.querySelector('.iso-row[data-field="' + key + '"]');
@@ -262,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (resetNarration) {
             setText("narrStage", "Ready to begin");
             setText("narrTitle", "Press Start to run a transaction");
-            setText("narrText", "Pick a <strong>scenario</strong>, an <strong>amount</strong> and a <strong>mode</strong> above, then press <strong>Start</strong>.");
+            setText("narrText", "Pick a <strong>scenario</strong> and a <strong>mode</strong> above, then press <strong>Start</strong>.");
             setText("narrIsoText", "ISO 8583 field details will appear here as the message travels. Hover a stage above to see what each party does.");
             switchTab("narration");
         }

@@ -283,8 +283,9 @@ html {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    gap: 20px 28px;
-    padding: 20px 24px;
+    justify-content: center;
+    gap: 22px 0;
+    padding: 24px;
     margin-bottom: 28px;
     border-radius: var(--radius-lg);
 }
@@ -292,7 +293,9 @@ html {
 .control-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 22px;
 }
 
 .control-label {
@@ -301,19 +304,20 @@ html {
     letter-spacing: 1px;
     font-weight: 700;
     color: var(--text-muted);
+    text-align: center;
 }
 
+/* Actions ride on the same single row, bottom-aligned with the pills */
 .control-actions {
-    margin-left: auto;
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    padding: 0 22px;
 }
 
 .scenario-pills,
 .mode-toggle,
-.speed-pills,
-.amount-pills {
+.speed-pills {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -321,8 +325,7 @@ html {
 
 .scenario-pill,
 .mode-btn,
-.speed-btn,
-.amount-btn {
+.speed-btn {
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -344,22 +347,14 @@ html {
 
 .scenario-pill:hover,
 .mode-btn:hover,
-.speed-btn:hover,
-.amount-btn:hover {
+.speed-btn:hover {
     border-color: var(--accent-primary);
     background: rgba(var(--accent-primary-rgb), 0.08);
 }
 
-.amount-btn {
-    font-family: var(--font-mono);
-    min-width: 48px;
-    justify-content: center;
-}
-
 .scenario-pill.active,
 .mode-btn.active,
-.speed-btn.active,
-.amount-btn.active {
+.speed-btn.active {
     background: var(--accent-primary);
     border-color: var(--accent-primary);
     color: #fff;
@@ -641,9 +636,10 @@ html {
     .hero-description { font-size: 1rem; }
     .hero-highlights { flex-direction: column; align-items: center; }
 
-    /* Controls stack; actions go full width */
-    .sim-controls { gap: 16px; padding: 16px; }
-    .control-actions { margin-left: 0; width: 100%; }
+    /* Controls stack; tighten spacing */
+    .sim-controls { gap: 16px 0; padding: 18px 16px; }
+    .control-group { padding: 0; }
+    .control-actions { width: 100%; justify-content: center; }
     .sim-primary { flex: 1; }
 
     /* Stepper becomes a horizontal scroll strip */
